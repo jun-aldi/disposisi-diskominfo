@@ -58,7 +58,7 @@
                         @endif
                         <td class="border px-4 py-2">
                             <div class="row">
-                                <button type="button" class="btn btn-secondary my-1 col-12">View</button>
+                                <button wire:click="generatePDF({{ $disposisi->id }})" type="button" class="btn btn-secondary my-1 col-12">View</button>
                                 <button wire:click="edit({{ $disposisi->id }})" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                     class="btn btn-success my-1 col-12">Edit</button>
                                 <button wire:click="delete({{ $disposisi->id }})"

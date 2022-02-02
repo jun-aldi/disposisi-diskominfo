@@ -3,8 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Disposisi;
-use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Livewire\Component;
+
 
 class DisposisiCrud extends Component
 {
@@ -143,5 +144,29 @@ class DisposisiCrud extends Component
     {
         Disposisi::find($id)->delete();
         session()->flash('message', 'Data deleted successfully.');
+    }
+    public function generatePDF($id)
+    {
+        $data = [
+            $disposisi = Disposisi::findOrFail($id),
+            "id" => $this->disposisi_id = $id,
+            "dari" => $this->dari = $disposisi->dari,
+            "tanggal_dibuat" => $this->tanggal_dibuat = $disposisi->tanggal_dibuat,
+            "no_surat" => $this->no_surat = $disposisi->no_surat,
+            "isi_surat" => $this->isi_surat = $disposisi->isi_surat,
+            "no_agenda" => $this->no_agenda = $disposisi->no_agenda,
+            "tanggal_diterima" => $this->tanggal_diterima = $disposisi->tanggal_diterima,
+            "kepada" => $this->kepada = $disposisi->kepada,
+            "status_id" => $this->status_id = $disposisi->status_id,
+            "users_id" => $this->users_id = $disposisi->users_id,
+        ];
+
+        $filename = $data['id'] ." tanggal " . $data['tanggal_dibuat'] . ".pdf";
+
+        $pdfContent = PDF::loadView('livewire.viewpdf',$data)->output();
+        return response()->streamDownload(
+        fn () => print($pdfContent),
+        "$filename"
+        );
     }
 }

@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('disposisi', DisposisiCrud::class)->name('disposisi');
+    Route::get('generate-pdf', [DisposisiCrud::class, 'generatePDF']);
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
