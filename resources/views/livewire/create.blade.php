@@ -1,17 +1,17 @@
 
 
-<div wire:ignore.self class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-    <div class="modal-content">
+<div wire:ignore.self class="modal fade" id="staticBackdropCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+    <div class="modal-content ">
         <div class="modal-header  bg-primary">
         <h5 class="modal-title" id="staticBackdropLabel">Formulir Disposisi</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" wire:click="closeModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="card card-primary">
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form>
+                <form method="POST">
                 <div class="card-body">
                     <div class="form-group">
                         <label for="no_suart">No Surat</label>
@@ -30,7 +30,7 @@
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
-                                <input wire:model="tanggal_dibuat" placeholder="masukkan tanggal Akhir" type="date" class="form-control datepicker" name="tanggal_dibuat" id="tanggal_dibuat">
+                                <input wire:model="tanggal_dibuat" placeholder="masukkan tanggal Akhir" type="date" class="form-control datepicker" name="tanggal_dibuat" id="tanggal_dibuat" value="2015-02-24">
                                 @error('tanggal_dibuat') <span class="text-red-500">{{ $message }}</span>@enderror
                             </div>
                         </div>
@@ -76,6 +76,9 @@
                 <div class="card-footer">
                     <button wire:click.prevent="store()" type="submit" class="btn btn-primary"  data-bs-dismiss="modal">Submit</button>
                 </div>
+                @csrf
+
+                @method('PUT')
                 </form>
             </div>
         </div>

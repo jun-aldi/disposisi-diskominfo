@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kyslik\ColumnSortable\Sortable;
 
 class Disposisi extends Model
 {
@@ -41,5 +42,20 @@ class Disposisi extends Model
     {
         return $this->hasOne(Agenda::class, 'disposisi_id', 'id');
     }
+
+    use Sortable;
+    public $sortable = [
+        'id',
+        'dari',
+        'tanggal_dibuat',
+        'no_surat',
+        'isi_surat',
+        'no_agenda',
+        'tanggal_diterima',
+        'kepada',
+        'status_id',
+        'users_id',
+
+    ];
 
 }

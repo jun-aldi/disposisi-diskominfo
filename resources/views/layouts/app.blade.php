@@ -19,12 +19,15 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.css" integrity="sha512-cOGz9gyEibwgs1MVDCcfmQv6mPyUkfvrV9TsRbTuOA12SQnLzBROihf6/jK57u0YxzlxosBFunSt4V75K6azMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css" integrity="sha512-cOGz9gyEibwgs1MVDCcfmQv6mPyUkfvrV9TsRbTuOA12SQnLzBROihf6/jK57u0YxzlxosBFunSt4V75K6azMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        {{-- <link rel="stylesheet" href="{{ mix('css/app.css') }}"> --}}
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
         @livewireStyles
 
         <!-- Scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js" integrity="sha512-PDFb+YK2iaqtG4XelS5upP1/tFSmLUVJ/BVL8ToREQjsuXC5tyqEfAQV7Ca7s8b7RLHptOmTJak9jxlA2H9xQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script src="{{ mix('js/app.js') }}" defer></script>
+
         <script src="{{ mix('js/dashboard.js') }}" defer></script>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed font-sans antialiased">
@@ -71,17 +74,32 @@
                                       <li class="nav-item">
                                         <a href="{{ route('disposisi') }}" class="nav-link">
                                           <i class="far fa-circle nav-icon"></i>
-                                          <p>{{ 'Buat Surat' }}</p>
+                                          <p>{{ 'Surat Masuk' }}</p>
                                         </a>
                                       </li>
                                       <li class="nav-item">
-                                        <a href="pages/charts/chartjs.html" class="nav-link">
+                                        <a href="#" class="nav-link">
                                           <i class="far fa-circle nav-icon"></i>
-                                          <p>{{ 'Lihat' }}</p>
+                                          <p>{{ 'Surat Keluar' }}</p>
+                                        </a>
+                                      </li>
+                                      <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                          <i class="far fa-circle nav-icon"></i>
+                                          <p>{{ 'Rekap Data' }}</p>
                                         </a>
                                       </li>
                                     </ul>
-                                  </li>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('agenda') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-calendar-check"></i>
+                                    <p>
+                                        {{ 'Agenda' }}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                    </a>
+                                </li>
 
                         </ul>
                     </nav>
@@ -97,7 +115,6 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col">
-                                <h1 class="text-center">{{ $header }}</h1>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
@@ -131,8 +148,12 @@
             </footer>
         </div>
 
-        @stack('modals')
+        {{-- //@stack('modals') --}}
         @livewireScripts
+        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
         @stack('scripts')
         <script>
 
@@ -144,5 +165,4 @@
             });
         </script>
     </body>
-
 </html>

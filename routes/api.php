@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DataTableController;
 use App\Http\Controllers\API\StatusController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
@@ -22,3 +23,5 @@ Route::post('statuscreate', [StatusController::class, 'status_create']);
 Route::middleware('auth:sanctum')->group(function() {
 
 });
+
+Route::get('datatable', [DataTableController::class, 'index']);

@@ -31,6 +31,8 @@ html.os-html,html.os-html>.os-host{display:block;overflow:hidden;box-sizing:bord
   line-height: 1;
 }
 
+
+
 .fa-lg {
   font-size: 1.3333333333em;
   line-height: 0.75em;
@@ -134,6 +136,17 @@ html.os-html,html.os-html>.os-host{display:block;overflow:hidden;box-sizing:bord
 .fal.fa-pull-right,
 .fab.fa-pull-right {
   margin-left: 0.3em;
+}
+nav.flex.items-center.justify-between {
+    margin-top: 15px;
+}
+
+p.text-sm.text-gray-700.leading-5 {
+    margin-top: 20px;
+}
+
+svg.w-5.h-5 {
+    width: 31px;
 }
 
 .fa-spin {

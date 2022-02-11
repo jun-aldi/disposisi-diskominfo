@@ -4,20 +4,52 @@ namespace App\Http\Livewire;
 
 use App\Models\Disposisi;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use Rappasoft\LaravelLivewireTables\DataTableComponent;
+use Rappasoft\LaravelLivewireTables\Views\Column;
+use Illuminate\Http\Request;
+use Datatables;
 
 
 class DisposisiCrud extends Component
 {
     public $disposisi_edit_id, $dari, $tanggal_dibuat, $no_surat, $isi_surat, $no_agenda, $tanggal_diterima, $kepada, $status_id, $status_disposisi;
-    public $isModalOpen = 0;
-    public $isModalOpenEdit = 0;
+    public $isModalOpen = 1;
+    public $isModalOpenEdit = 1;
     //public $users_id = Auth::id();
-    public function render()
+    public function render(Request $request, Request $request2)
     {
-        $this->disposisi =  Disposisi::all();
-        return view('livewire.disposisi-crud')
-        ->layout('layouts.app', ['header' => 'Lembar Disposisi Diskominfo Karanganyar']);
+        //$this->disposisi =  Disposisi::all();
+        // $disposisis = Disposisi::sortable()->paginate(5);
+        // return view('livewire.disposisi-crud')->with('disposisis', $disposisis);
+
+        // return view('livewire.disposisi-crud')
+        // ->layout('layouts.app', ['header' => 'Lembar Disposisi Diskominfo Karanganyar']);
+        $filter = $request->query('filter');
+        $filter2 = $request2->query('filter2');
+
+        if (!empty($filter)&&empty($filter2)) {
+            $disposisis = Disposisi::sortable()
+            ->where('Disposisi.tanggal_dibuat', 'like', '%'.$filter.'%')
+            ->paginate(10);
+        }
+        else if (!empty($filter2)&&empty($filter)) {
+            $disposisis = Disposisi::sortable()
+            ->where('Disposisi.dari', 'like', '%'.$filter2.'%')
+            ->paginate(10);
+        }
+        else if (!empty($filter)&&!empty($filter2)) {
+            $disposisis = Disposisi::sortable()
+                ->where('Disposisi.dari', 'like', '%'.$filter2.'%')
+                ->where('Disposisi.tanggal_dibuat', 'like', '%'.$filter.'%')
+                ->paginate(10);
+        }else {
+            $disposisis = Disposisi::sortable(['tanggal_dibuat' => 'desc', 'id' => 'desc'])
+                ->paginate(10);
+        }
+
+        return view('livewire.disposisi-crud')->with('disposisis', $disposisis)->with('filter', $filter)->with('filter2', $filter2)->layout('layouts.app', ['header' => 'Lembar Disposisi Diskominfo Karanganyar']);
     }
 
     public function create()
@@ -26,22 +58,28 @@ class DisposisiCrud extends Component
         $this->openModal();
     }
 
+
     public function openModal()
     {
+        //return redirect(request()->header('Referer'));
         $this->isModalOpen = true;
     }
 
     public function closeModal()
     {
+        return redirect(request()->header('Referer'));
         $this->isModalOpen = false;
     }
     public function openModalEdit()
     {
+        //return redirect(request()->header('Referer'));
         $this->isModalOpenEdit = true;
+
     }
 
     public function closeModalEdit()
     {
+        return redirect(request()->header('Referer'));
         $this->isModalOpenEdit = false;
     }
 
@@ -89,6 +127,7 @@ class DisposisiCrud extends Component
 
         $this->closeModal();
         $this->resetCreateForm();
+
     }
 
     public function edit($id)
@@ -104,7 +143,6 @@ class DisposisiCrud extends Component
         $this->kepada = $disposisi->kepada;
         $this->status_id = $disposisi->status_id;
         $this->users_id = $disposisi->users_id;
-        $this->openModalEdit();
 
 
     }
@@ -138,12 +176,14 @@ class DisposisiCrud extends Component
                 $disposisi->save();
 
                 session()->flash('message', 'Data has been updated successfully');
+                $this->closeModal();
     }
 
     public function delete($id)
     {
         Disposisi::find($id)->delete();
         session()->flash('message', 'Data deleted successfully.');
+        redirect(request()->header('Referer'));
     }
     public function generatePDF($id)
     {
@@ -164,9 +204,16 @@ class DisposisiCrud extends Component
         $filename = $data['id'] ." tanggal " . $data['tanggal_dibuat'] . ".pdf";
 
         $pdfContent = PDF::loadView('livewire.viewpdf',$data)->output();
+        redirect(request()->header('Referer'));
         return response()->streamDownload(
         fn () => print($pdfContent),
         "$filename"
         );
+        return redirect(request()->header('Referer'));
+
     }
 }
+
+
+
+

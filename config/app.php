@@ -136,6 +136,7 @@ return [
 
     'providers' => [
 
+
         /*
          * Laravel Framework Service Providers...
          */
@@ -179,6 +180,14 @@ return [
 
         //DOMPDF...
         Barryvdh\DomPDF\ServiceProvider::class,
+
+        // Yajra Datatables....
+        Yajra\DataTables\DataTablesServiceProvider::class,
+
+        //Kyslik Datatables....
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+
+
     ],
 
     /*
@@ -234,6 +243,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 
