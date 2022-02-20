@@ -1,3 +1,4 @@
+
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
@@ -14,7 +15,7 @@
             <div class="container my-3">
                 <div class="row">
                     <div class="col">
-                        <button wire:click="create()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropCreate">Create Posts</button>
+                        <button wire:click="create()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropCreate">Tambah Agenda</button>
                     </div>
                     <div class="col">
                         <form class="form-inline" method="GET">

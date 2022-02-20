@@ -11,10 +11,12 @@
                 </div>
             </div>
             @endif
+
+            <br /><br />
             <div class="container my-3">
                 <div class="row">
                     <div class="col">
-                        <button wire:click="create()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdropCreate">Create Posts</button>
+                        <a href="{{ route('form') }}" class="btn btn-primary" type="button">Add new Disposisi</a>
                     </div>
                     <div class="col">
                         <form class="form-inline" method="GET">
@@ -29,9 +31,6 @@
                     </div>
                 </div>
             </div>
-            @if($isModalOpen)
-            @include('livewire.create')
-            @endif
             @if($isModalOpenEdit)
             @include('livewire.edit')
             @endif
@@ -49,6 +48,7 @@
                             <th class="px-4 py-2">@sortablelink('kepada')</th>
                             <th class="px-4 py-2">@sortablelink('status_id')</th>
                             <th class="px-4 py-2">@sortablelink('users_id')</th>
+                            <th class="px-4 py-2">Dokumen</th>
                             <th class="px-4 py-2">Actions</th>
                         </tr>
                     </thead>
@@ -71,12 +71,14 @@
                             @else
                             <td class="border px-4 py-2 text-primary fw-bold font-weight-bold">{{"Diproses"}}</td>
                             @endif
-                            @if($disposisi->users_id == 1)
-                            <td class="border px-4 py-2 fw-bold font-weight-bold">{{"Diskominfo_adm"}}</td>
-                            @endif
+                            <td class="border px-4 py-2 fw-bold font-weight-bold">{{$disposisi->users_id}}</td>
+                            <td class="border px-4 py-2">
+                                @if (!empty ($disposisi->filename))
+                                <button type="button" class="btn btn-info" wire:click="download({{$disposisi->id}})">Lihat</button>
+                                @endif</td>
                             <td class="border px-12 py-2">
                                 <div class="row">
-                                    <button wire:click="generatePDF({{ $disposisi->id }})" type="button" class="btn btn-secondary px-2 mx-1 my-1 col-xl-4" style="font-size: 8px">View</button>
+                                    <button wire:click="generatePDF({{ $disposisi->id }})" type="button" class="btn btn-secondary px-2 mx-1 my-1 col-xl-4" style="font-size: 8px">Print</button>
                                     <button type="button" wire:click="edit({{ $disposisi->id }})" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                         class="btn btn-success mx-1 px-2 my-1 col-xl-4" style="font-size: 8px">Edit</button>
                                     <button type="button" wire:click="delete({{ $disposisi->id }})"

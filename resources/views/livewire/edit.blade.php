@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
     <div class="modal-content">
         <div class="modal-header  bg-primary">
-        <h5 class="modal-title" id="staticBackdropLabel">Formulir Disposisi</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Edit Disposisi Surat Masuk</h5>
         <button wire:click="closeModalEdit()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -31,7 +31,7 @@
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
-                                <input type="date" name="tanggal_dibuat" id="tanggal_dibuat" value="{{ date('d/m/Y',strtotime($tanggal_dibuat)) }}">
+                                <input wire:model="tanggal_dibuat" id="tanggal_dibuat" placeholder="masukkan tanggal Akhir" type="date" class="form-control datepicker" name="tanggal_dibuat">
                                 @error('tanggal_dibuat') <span class="text-red-500">{{ $message }}</span>@enderror
                             </div>
                         </div>
@@ -79,9 +79,6 @@
                 </div>
                 </form>
             </div>
-        </div>
-        <div class="modal-footer">
-        <button wire:click="closeModalEdit()" type="button " class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
     </div>
     </div>

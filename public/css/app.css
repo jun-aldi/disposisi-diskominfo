@@ -6,6 +6,12 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ button.btn.btn-mulai:hover {
+    background-color: #e0abc8;
+    color: black    ;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
 :root {
   --blue: #3490dc;
   --indigo: #6574cd;
@@ -42,6 +48,16 @@
 *::after {
   box-sizing: border-box;
 }
+.fade-in{
+    transition: 1s;
+    transform: translateY(100px);
+    opacity: 0;
+}
+.fade-in[data-scroll="in"]{
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 0.5s;
+}
 
 html {
   font-family: sans-serif;
@@ -62,7 +78,10 @@ body {
   line-height: 1.6;
   color: #212529;
   text-align: left;
-  background-color: #f8fafc;
+  background-color: white;
+}
+img.img-fluid.img-landing {
+    max-width: 90%;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {

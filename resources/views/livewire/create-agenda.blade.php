@@ -59,7 +59,7 @@
                 </div>
                 @csrf
 
-                @method('PUT')
+                @method('POST')
                 </form>
             </div>
         </div>

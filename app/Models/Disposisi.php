@@ -25,6 +25,7 @@ class Disposisi extends Model
         'no_agenda',
         'tanggal_diterima',
         'kepada',
+        'filename',
         'status_id',
         'users_id',
 
@@ -41,6 +42,10 @@ class Disposisi extends Model
     public function agenda_disposisi()
     {
         return $this->hasOne(Agenda::class, 'disposisi_id', 'id');
+    }
+    public function getData()
+    {
+        return static::orderBy('created_at','desc')->get();
     }
 
     use Sortable;

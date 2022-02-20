@@ -1,0 +1,17 @@
+button.btn.btn-mulai {
+    background-color: #FF2C9C;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.fade-in{
+    transition: 1s;
+    transform: translateY(100px);
+    opacity: 0;
+}
+.fade-in[data-scroll="in"]{
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 0.5s;
+}
+

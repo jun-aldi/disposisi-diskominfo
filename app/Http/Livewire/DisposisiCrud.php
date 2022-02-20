@@ -10,16 +10,20 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Illuminate\Http\Request;
 use Datatables;
+use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
 
 
 class DisposisiCrud extends Component
 {
-    public $disposisi_edit_id, $dari, $tanggal_dibuat, $no_surat, $isi_surat, $no_agenda, $tanggal_diterima, $kepada, $status_id, $status_disposisi;
+    use WithFileUploads;
+    public $pdf, $disposisi_edit_id, $dari, $tanggal_dibuat, $no_surat, $isi_surat, $no_agenda, $tanggal_diterima, $kepada, $status_id, $status_disposisi, $filename;
     public $isModalOpen = 1;
     public $isModalOpenEdit = 1;
     //public $users_id = Auth::id();
     public function render(Request $request, Request $request2)
     {
+        $disposisis = Disposisi::all();
         //$this->disposisi =  Disposisi::all();
         // $disposisis = Disposisi::sortable()->paginate(5);
         // return view('livewire.disposisi-crud')->with('disposisis', $disposisis);
@@ -47,16 +51,16 @@ class DisposisiCrud extends Component
         }else {
             $disposisis = Disposisi::sortable(['tanggal_dibuat' => 'desc', 'id' => 'desc'])
                 ->paginate(10);
+
         }
 
         return view('livewire.disposisi-crud')->with('disposisis', $disposisis)->with('filter', $filter)->with('filter2', $filter2)->layout('layouts.app', ['header' => 'Lembar Disposisi Diskominfo Karanganyar']);
     }
-
-    public function create()
+    public function form()
     {
-        $this->resetCreateForm();
-        $this->openModal();
+        return view('livewire.dispo');
     }
+
 
 
     public function openModal()
@@ -67,7 +71,7 @@ class DisposisiCrud extends Component
 
     public function closeModal()
     {
-        return redirect(request()->header('Referer'));
+         return redirect(request()->header('Referer'));
         $this->isModalOpen = false;
     }
     public function openModalEdit()
@@ -79,7 +83,7 @@ class DisposisiCrud extends Component
 
     public function closeModalEdit()
     {
-        return redirect(request()->header('Referer'));
+         return redirect(request()->header('Referer'));
         $this->isModalOpenEdit = false;
     }
 
@@ -106,12 +110,18 @@ class DisposisiCrud extends Component
             'tanggal_diterima'=>'required',
             'kepada'=>'required',
             'status_id'=>'required',
+            'filename' => 'required|mimes:pdf|max:2048',
             //'users_id'=>'required',
         ]);
 
 
 
-        Disposisi::updateOrCreate(['id' => $this->id], [
+        $name = md5($this->filename . microtime()).'.'.$this->filename->extension();
+
+        $this->filename->store('filenames', 'public');
+
+
+        Disposisi::Create(['id' => $this->id], [
             'dari' => $this->dari,
             'tanggal_dibuat' => $this->tanggal_dibuat,
             'no_surat' => $this->no_surat,
@@ -121,17 +131,19 @@ class DisposisiCrud extends Component
             'kepada' => $this->kepada,
             'status_id' => $this->status_id,
             'users_id' => auth()->id(),
+            'filename' => $name,
         ]);
 
         session()->flash('message', $this->id ? 'Data updated successfully.' : 'Data added successfully.');
 
-        $this->closeModal();
+
         $this->resetCreateForm();
 
     }
 
     public function edit($id)
     {
+
         $disposisi = Disposisi::findOrFail($id);
         $this->disposisi_id = $id;
         $this->dari = $disposisi->dari;
@@ -149,18 +161,22 @@ class DisposisiCrud extends Component
 
     public function editEvent()
     {
+                    $this->validate([
+                        'dari'=>'required',
+                        'tanggal_dibuat'=>'required',
+                        'no_surat'=>'required',
+                        'isi_surat'=>'required',
+                        // 'no_agenda'=>'required',
+                        'tanggal_diterima'=>'required',
+                        'kepada'=>'required',
+                        'status_id'=>'required',
+                        // 'filename' => 'required|mimes:pdf|max:2048',
+                        //'users_id'=>'required',
+                    ]);
 
-                $this->validate([
-                    'dari'=>'required',
-                    'tanggal_dibuat'=>'required',
-                    'no_surat'=>'required',
-                    'isi_surat'=>'required',
-                    'no_agenda'=>'required',
-                    'tanggal_diterima'=>'required',
-                    'kepada'=>'required',
-                    'status_id'=>'required',
-                    //'users_id'=>'required',
-                ]);
+                // $disposisi_del = Disposisi::where('id', $this->disposisi_id)->firstOrFail();
+                // $filedel = $disposisi_del->filename;
+
 
                 $disposisi = Disposisi::where('id', $this->disposisi_id)->first();
                 $disposisi->dari = $this->dari;
@@ -171,7 +187,19 @@ class DisposisiCrud extends Component
                 $disposisi->tanggal_diterima = $this->tanggal_diterima;
                 $disposisi->kepada = $this->kepada;
                 $disposisi->status_id = $this->status_id;
+
+                // if(!empty($disposisi->filename)){
+                //     Storage::delete('disposisi/'.$filedel);
+                //     $name = md5($this->filename . microtime()).'.'.$this->filename->extension();
+
+                //     $this->filename->storeAs('disposisi', $name);
+                //     $disposisi->filename = $name;
+                // }
+
+
+
                 //$disposisi->users_id = $this->users_id;
+
 
                 $disposisi->save();
 
@@ -181,9 +209,12 @@ class DisposisiCrud extends Component
 
     public function delete($id)
     {
+        $disposisi = Disposisi::where('id', $id)->firstOrFail();
+        Storage::delete('disposisi/'.$disposisi->filename);
         Disposisi::find($id)->delete();
+
+        return redirect(request()->header('Referer'));
         session()->flash('message', 'Data deleted successfully.');
-        redirect(request()->header('Referer'));
     }
     public function generatePDF($id)
     {
@@ -212,6 +243,20 @@ class DisposisiCrud extends Component
         return redirect(request()->header('Referer'));
 
     }
+    public function download($id){
+        $disposisi = Disposisi::where('id', $id)->firstOrFail();
+    	$myFile = storage_path('app/disposisi/'.$disposisi->filename);
+        $headers = ['Content-Type: application/pdf'];
+    	$newName ='disposisi_masuk_'.$disposisi->id.'_'.$disposisi->dari.'_'.$disposisi->tanggal_diterima.'.pdf';
+
+
+    	return response()->download($myFile, $newName, $headers);
+
+    }
+
+
+
+
 }
 
 
