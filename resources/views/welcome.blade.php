@@ -40,6 +40,7 @@
                         <div class="col-xl-5 col-sm-2" data-aos-duration="1000" data-aos="fade-left">
                             <img src="{{ asset('img/LP-1.png') }}" alt="landingPage1"  srcset="" class="img-fluid img-landing">
                         </div>
+
                     </div>
                 </div>
             </div>

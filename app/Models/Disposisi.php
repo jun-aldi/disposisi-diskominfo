@@ -63,4 +63,10 @@ class Disposisi extends Model
 
     ];
 
+
+    public function deleteData($id)
+    {
+        return static::find($id)->delete();
+    }
+
 }

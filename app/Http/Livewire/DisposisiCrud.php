@@ -111,7 +111,7 @@ class DisposisiCrud extends Component
             'kepada'=>'required',
             'status_id'=>'required',
             'filename' => 'required|mimes:pdf|max:2048',
-            //'users_id'=>'required',
+            // 'users_id'=>'required',
         ]);
 
 
@@ -174,9 +174,6 @@ class DisposisiCrud extends Component
                         //'users_id'=>'required',
                     ]);
 
-                // $disposisi_del = Disposisi::where('id', $this->disposisi_id)->firstOrFail();
-                // $filedel = $disposisi_del->filename;
-
 
                 $disposisi = Disposisi::where('id', $this->disposisi_id)->first();
                 $disposisi->dari = $this->dari;
@@ -187,19 +184,6 @@ class DisposisiCrud extends Component
                 $disposisi->tanggal_diterima = $this->tanggal_diterima;
                 $disposisi->kepada = $this->kepada;
                 $disposisi->status_id = $this->status_id;
-
-                // if(!empty($disposisi->filename)){
-                //     Storage::delete('disposisi/'.$filedel);
-                //     $name = md5($this->filename . microtime()).'.'.$this->filename->extension();
-
-                //     $this->filename->storeAs('disposisi', $name);
-                //     $disposisi->filename = $name;
-                // }
-
-
-
-                //$disposisi->users_id = $this->users_id;
-
 
                 $disposisi->save();
 

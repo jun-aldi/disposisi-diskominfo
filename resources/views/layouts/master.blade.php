@@ -7,6 +7,53 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+
+        <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<title>Diskominfo Karanganyar</title>
+
+<!-- Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+{{-- bootstrap --}}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- Styles -->
+
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
+{{-- bootsrap js --}}
+
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
+<link  href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+<style>
+    body {
+        font-family: 'Poppins';
+        background: white;
+    }
+    button.btn.btn-mulai:hover {
+background-color: #f547a7;
+color: white    ;
+font-weight: 600;
+letter-spacing: 1px;
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
@@ -28,13 +75,21 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js" integrity="sha512-PDFb+YK2iaqtG4XelS5upP1/tFSmLUVJ/BVL8ToREQjsuXC5tyqEfAQV7Ca7s8b7RLHptOmTJak9jxlA2H9xQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+
+        {{-- datatables export --}}
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
+
+
+
+
         <script src="{{ mix('js/dashboard.js') }}" defer></script>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed font-sans antialiased">
         <div class="wrapper">
 
             <!-- Navbar -->
-            @livewire('navigation-menu')
+            @include('navigation-menu')
             <!-- /.navbar -->
 
             <!-- Main Sidebar Container -->
@@ -58,7 +113,6 @@
                     </div> --}}
 
                     <!-- Sidebar Menu -->
-                    @if(Auth::check() && Auth::user()->roles == "ADMIN")
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
@@ -99,8 +153,6 @@
 
                         </ul>
                     </nav>
-                    @endif
-
                     <!-- /.sidebar-menu -->
                 </div>
                 <!-- /.sidebar -->
@@ -123,14 +175,14 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col">
-                                {{ $slot }}
+                                @yield('konten')
                             </div>
 
-                            @if (isset($aside))
+                            {{-- @if (isset($aside))
                                 <div class="col-lg-3">
                                     {{ $aside }}
                                 </div>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </section>
@@ -160,5 +212,14 @@
                 format: 'hh:mm:ss a'
             });
         </script>
+
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js   "></script>
+        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+
     </body>
 </html>

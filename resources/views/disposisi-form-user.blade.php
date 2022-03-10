@@ -107,9 +107,6 @@
                                 <div class="col-sm-9">
                                     <input type="file" class="form-control" name="filename" id="filename" >
                                     <p>!!PDF UKURAN MAKSIMAL 2MB</p>
-                                    @error('filename')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">

@@ -64,7 +64,7 @@
                                           <div class="d-flex flex-row-reverse">
                                               @if ($disposisi->status_id == 1)
                                               <form method="post" action="{{route('lihatpdf', $disposisi->id) }}">
-                                                @csrf
+                                                {{ csrf_field() }}
                                                 <button class="btn btn-lihat mx-2">Download Diposisi</button>
                                               </form>
                                               @endif
