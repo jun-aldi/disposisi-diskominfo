@@ -12,19 +12,27 @@
                 <div class="navbar-nav">
                     <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Disposisi</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Disposisi</a>
                         <div class="dropdown-menu">
                             <a href="{{url('form-disposisi-masuk')}}" class="dropdown-item">Buat Surat Masuk</a>
 
                             <a href="{{url('disposisi-users')}}" class="dropdown-item">Surat Saya</a>
                         </div>
                     </div>
-                    <a href="{{ route('agenda-lp') }}" class="nav-item nav-link active">Agenda</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Agenda</a>
+                        <div class="dropdown-menu">
+                            <a href="{{ route('agenda-kepala') }}" class="nav-item  dropdown-item">Kepala Diskominfo</a>
+                            <a href="{{ route('agenda-sekre') }}" class="nav-item  dropdown-item">Sekretariat Diskominfo</a>
+                            <a href="{{ route('agenda-tki') }}" class="nav-item  dropdown-item">Bidang Tata Kelola <br> Informatika Diskominfo</a>
+                            <a href="{{ route('agenda-ikp') }}" class="nav-item  dropdown-item">Bidang Informasi dan <br> Komunikasi Publik</a>
+                        </div>
+                    </div>
                 </div>
                 @if (Route::has('login'))
                     @auth
                     @if(Auth::check() && Auth::user()->roles == "ADMIN")
-                    <a  href="{{ route('dashboard') }}" class="nav-item nav-link">Dashboard </a>
+                    <a  href="{{ route('dashboard') }}" class="nav-item nav-link active">Dashboard </a>
                     @endif
                         <x-jet-dropdown id="navbarDropdown" class="user-menu">
                             <x-slot name="trigger">

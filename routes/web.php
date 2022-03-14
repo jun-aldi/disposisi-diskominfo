@@ -28,13 +28,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('agenda-lp', [AgendaController::class, 'index'])->name('agenda-lp');
-    Route::get('/', function () {
-        return view('welcome');
-    });
+
+//welcome route
+Route::get('/', function () {
+    return view('welcome');
+});
+
+//route by bidang
+Route::get('agenda-kepala', [AgendaController::class, 'indexKepala'])->name('agenda-kepala');
+Route::get('agenda-sekre', [AgendaController::class, 'indexSekretariat'])->name('agenda-sekre');
+Route::get('agenda-tki', [AgendaController::class, 'indexTki'])->name('agenda-tki');
+Route::get('agenda-ikp', [AgendaController::class, 'indexIkp'])->name('agenda-ikp');
 
 
+
+
+
+
+
+//admin route
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
+
 
     Route::get('/profile.show', [ProfileShow::class, 'index'])->name('profile.show');
 
@@ -57,12 +71,13 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
     Route::get('/lihatPDF/{id}',[ViewDisposisiUser::class, 'lihatPDF'])->name('lihatPDF');
     Route::post('/download/{id}', [ViewDisposisiUser::class, 'download'])->name('downloadfile');
     Route::post('/lihatPDF/{id}', [ViewDisposisiUser::class, 'lihatPDF'])->name('lihatpdf');
+
     Route::get('disposisi-users', [ViewDisposisiUser::class, 'index']);
     Route::get('disposisi-users/list', [ViewDisposisiUser::class, 'getDisposisi'])->name('disposisi-users.list');
     Route::post('print',[ViewDisposisiUser::class, 'print'])->name('print');
 
 
-    Route::get('form-disposisi-masuk2', [DisposisiController::class, 'index2']);
+    Route::get('/form-disposisi-masuk2', [DisposisiController::class, 'index2']);
     Route::get('form-disposisi-masuk', [DisposisiController::class, 'index']);
     Route::post('store-disposisi-user2', [DisposisiController::class, 'store2']);
     Route::post('store-disposisi-user', [DisposisiController::class, 'store']);
@@ -77,6 +92,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
 
 });
 Route::middleware(['auth:sanctum', 'verified',])->group(function () {
+
 
     Route::get('/profile.show', [ProfileShow::class, 'index'])->name('profile.show');
 

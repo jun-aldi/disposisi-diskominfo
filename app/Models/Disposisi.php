@@ -16,15 +16,16 @@ class Disposisi extends Model
      *
      * @var string[]
      */
-    public $table = "disposisi";
+    public $table = "disposisis";
     protected $fillable = [
         'dari',
         'tanggal_dibuat',
         'no_surat',
         'isi_surat',
-        'no_agenda',
+        'agendas_id',
         'tanggal_diterima',
-        'kepada',
+        'bidangs_id',
+        'surats_id',
         'filename',
         'status_id',
         'users_id',
@@ -35,14 +36,23 @@ class Disposisi extends Model
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
     }
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'bidangs_id', 'id');
+    }
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id', 'id');
     }
     public function agenda_disposisi()
     {
-        return $this->hasOne(Agenda::class, 'disposisi_id', 'id');
+        return $this->belongsTo(Agenda::class, 'disposisis_id', 'id');
     }
+    public function surat()
+    {
+        return $this->belongsTo(Surat::class, 'surats_id', 'id');
+    }
+
     public function getData()
     {
         return static::orderBy('created_at','desc')->get();
@@ -57,7 +67,7 @@ class Disposisi extends Model
         'isi_surat',
         'no_agenda',
         'tanggal_diterima',
-        'kepada',
+        'bidangs_id',
         'status_id',
         'users_id',
 

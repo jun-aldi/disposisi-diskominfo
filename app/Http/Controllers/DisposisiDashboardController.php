@@ -18,8 +18,8 @@ class DisposisiDashboardController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Disposisi::select(['id','dari', 'tanggal_dibuat','no_surat','isi_surat','no_agenda','tanggal_diterima','kepada','status_id','users_id'])
-            ->with(['users']);
+            $data = Disposisi::select(['id','dari','surats_id', 'tanggal_dibuat','no_surat','isi_surat','tanggal_diterima','bidangs_id','status_id','users_id'])
+            ->with(['users'])->with(['bidang'])->with(['surat']);
 
             // if(!empty($request->from_date))
             // {
@@ -56,7 +56,23 @@ class DisposisiDashboardController extends Controller
                 $btn ='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editDisposisi">Edit</a>';
                 return $btn;
             })
-            ->rawColumns(['status_id','action','lihatpdf', 'delete','edit'])->make(true);
+            ->addColumn('createAgenda',function($data){
+                $btn ='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Create" class="btn btn-primary btn-sm createNewAgenda">Buat Agenda</a>';
+                return $btn;
+            })
+            ->filter(function ($instance) use ($request) {
+                if ($request->get('bidang_filter') == '1' || $request->get('bidang_filter') == '2' ||$request->get('bidang_filter') == '3' || $request->get('bidang_filter') == '4'){
+                    $instance->where('bidangs_id', $request->get('bidang_filter'));
+                }
+                if (!empty($request->get('search'))) {
+                     $instance->where(function($w) use($request){
+                        $search = $request->get('search');
+                        $w->orWhere('bidangs_id', 'LIKE', "%$search%");
+
+                    });
+                }
+            })
+            ->rawColumns(['status_id','action','lihatpdf', 'delete','edit', 'createAgenda'])->make(true);
         }
         return view('dashboard-disposisi');
     }
@@ -80,15 +96,34 @@ class DisposisiDashboardController extends Controller
     {
 
 
+        request()->validate([
+            'tanggal_diterima'=>'required',
+
+        ]);
+
                 $disposisi = Disposisi::where('id', $request->id)->first();
                 $disposisi->dari = $request->dari;
                 $disposisi->tanggal_dibuat = $request->tanggal_dibuat;
                 $disposisi->no_surat = $request->no_surat;
                 $disposisi->isi_surat = $request->isi_surat;
-                $disposisi->no_agenda = $request->no_agenda;
                 $disposisi->tanggal_diterima = $request->tanggal_diterima;
-                $disposisi->kepada = $request->kepada;
+                $disposisi->surats_id = $request->surats_id;
+                $disposisi->bidangs_id = $request->bidangs_id;
                 $disposisi->status_id = $request->status_id;
+
+                $getSurat = $request->surats_id;
+
+                $disposisi->save();
+
+
+                $getID = $disposisi->id;
+
+                $getNoSurat= $getID.'/'.$getSurat.'/'.date('Y');
+
+                $disposisi = Disposisi::where('id', $getID)->first();
+
+                $disposisi->no_surat = $getNoSurat;
+
 
                 $disposisi->save();
 

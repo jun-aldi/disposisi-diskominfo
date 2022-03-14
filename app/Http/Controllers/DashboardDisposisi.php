@@ -14,7 +14,7 @@ class DashboardDisposisi extends Controller
     }
 
     public function list(){
-        $disposisis = Disposisi::select(['id','dari', 'tanggal_dibuat','no_surat','isi_surat','no_agenda','tanggal_diterima','kepada','status_id','users_id']);
+        $disposisis = Disposisi::select(['id','dari', 'tanggal_dibuat','no_surat','isi_surat','tanggal_diterima','kepada','status_id','users_id']);
         return DataTables::of($disposisis)
         ->editColumn('status_id',function($data_disposisi){
             if($data_disposisi->status_id == 1){
@@ -38,7 +38,11 @@ class DashboardDisposisi extends Controller
             $btn =' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteProduct"><i class="far fa-trash-alt text-white" data-feather="delete">Delete</i></a>';
             return $btn;
         })
-        ->rawColumns(['status_id','action','lihatpdf', 'edit'])->make(true);
+        ->addColumn('createAgenda',function($data){
+            $btn ='<a href="javascript:void(0)" id="createNewAgenda" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="createNewAgenda" class="createNewAgenda btn btn-primary btn-sm createNewAgenda mx-1 my-2">Create Agenda</a>';
+            return $btn;
+        })
+        ->rawColumns(['status_id','action','lihatpdf', 'edit','createAgenda'])->make(true);
     }
 
     public function store(Request $request)

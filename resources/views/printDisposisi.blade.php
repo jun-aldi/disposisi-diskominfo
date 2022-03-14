@@ -68,8 +68,17 @@
                 text-justify: inter-word;">{{ $isi_surat }}</p></td>
             <td class="tg-0lax">
                     <pre class="pre-p">Diterima Tanggal	      :   <strong>{{ $tanggal_diterima }}</strong></pre>
-                <hr><pre class="pre-p">Nomor Agenda		        :    <strong>{{ $no_agenda }}</strong></pre>
-                <hr><pre class="pre-p">Diteruskan Kepada   :  <strong>{{ $kepada }}</strong></pre><hr></td>
+                <hr><pre class="pre-p">Nomor Agenda		        :    <strong>{{$no_agenda}}</strong></pre>
+                @if ($bidangs_id==1)
+                <hr><pre class="pre-p">Diteruskan Kepada   :  <strong>Kepala Diskominfo</strong></pre><hr></td>
+                @elseif ($bidangs_id==2)
+                <hr><pre class="pre-p">Diteruskan Kepada   :  <strong>Kepala Sekretariat Diskominfo</strong></pre><hr></td>
+                @elseif ($bidangs_id==3)
+                <hr><pre class="pre-p">Diteruskan Kepada   :  <strong>Kepala Bidang Tata Kelola Informatika</strong></pre><hr></td>
+                @else
+                <hr><pre class="pre-p">Diteruskan Kepada   :  <strong>Kepala Bidang Informasi dan Komunikasi Publik</strong></pre><hr></td>
+                @endif
+
           </tr>
           <tr>
             <td class="tg-0lax"><span style="font-weight:bold">DISPOSISI KEPALA :</span></td>

@@ -35,7 +35,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Disposisi ID</th>
+                                                    <th>No Disposisi</th>
+                                                    <th>Bidang</th>
                                                     <th>Jam Agenda</th>
                                                     <th>Tanggal Agenda</th>
                                                     <th>Isi</th>
@@ -76,8 +77,17 @@
                                             <div class="form-group">
                                                 <label for="name" class="col-sm-2 control-label">Disposisi id</label>
                                                 <div class="col-sm-12">
-                                                    <input type="text" class="form-control" id="disposisi_id" name="disposisi_id" placeholder="Masukan ID Disposisi" value="" maxlength="50" required="">
+                                                    <input type="number" class="form-control" id="disposisis_id" name="disposisis_id" placeholder="Masukan ID Disposisi" value="" maxlength="50" required="" readonly>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="bidangs_id" class="col-sm-2 control-label">Kepada</label>
+                                                <select  name="bidangs_id" id="bidangs_id" class="form-select" aria-label="Default select example">
+                                                    <option value="1">Kepala Diskominfo</option>
+                                                    <option value="2">Sekretariat Diskominfo</option>
+                                                    <option value="3">Bidang Tata Kelola Informatika</option>
+                                                    <option value="4">Bidang Informasi dan Komunikasi Publik</option>
+                                                  </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="jam_agenda" class="col-sm-2 control-label">Jam Agenda</label>
@@ -100,7 +110,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label">Tempat</label>
                                                 <div class="col-sm-12">
-                                                    <input type="dtext" class="form-control" id="tempat" name="tempat" placeholder="Tempat Agenda" value="" maxlength="50" required="">
+                                                    <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Agenda" value="" maxlength="50" required="">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -132,8 +142,17 @@
                                                 <div class="form-group">
                                                     <label for="name" class="col-sm-2 control-label">Disposisi id</label>
                                                     <div class="col-sm-12">
-                                                        <input type="text" class="form-control" id="disposisi_id" name="disposisi_id" placeholder="Masukan ID Disposisi" value="" maxlength="50" required="">
+                                                        <input type="text" class="form-control" id="disposisis_id" name="disposisis_id" placeholder="Masukan ID Disposisi" value="" maxlength="50" required="">
                                                     </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="bidangs_id" class="col-sm-2 control-label">Kepada</label>
+                                                    <select  name="bidangs_id" id="bidangs_id" class="form-select" aria-label="Default select example">
+                                                        <option value="1">Kepala Diskominfo</option>
+                                                        <option value="2">Sekretariat Diskominfo</option>
+                                                        <option value="3">Bidang Tata Kelola Informatika</option>
+                                                        <option value="4">Bidang Informasi dan Komunikasi Publik</option>
+                                                      </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="jam_agenda" class="col-sm-2 control-label">Jam Agenda</label>
@@ -205,7 +224,8 @@
             order: [ [0, 'desc'] ],
             columns : [
                 {data: 'id', name: 'id'},
-                {data: 'disposisi_id', name: 'disposisi_id'},
+                {data: 'disposisi.no_surat', name: 'disposisi_surat'},
+                {data: 'bidang.name', name: 'bidang.name'},
                 {data: 'jam_agenda', name: 'jam_agenda'},
                 {data: 'tanggal_agenda', name: 'tanggal_agenda'},
                 {data: 'isi', name: 'isi'},
@@ -258,19 +278,21 @@
                     $('#saveError').html('Error', error);
                     $('#saveBtnCreate').html('Save Changes');
                 }
+
             });
         });
 
 
 
         $('body').on('click', '.editAgenda', function () {
-            var agenda_id = $(this).data('id');
-            $.get("{{ route('agenda-dashboard.index') }}" +'/' + agenda_id +'/edit', function (data) {
+            var agendas_id = $(this).data('id');
+            $.get("{{ route('agenda-dashboard.index') }}" +'/' + agendas_id +'/edit', function (data) {
             $('#modelHeading').html("Edit Agenda");
             $('#saveBtnEdit').val("edit-user");
             $('#ajaxEdit').modal('show');
             $('#id').val(data.id);
-            $('#disposisi_id').val(data.disposisi_id);
+            $('#disposisis_id').val(data.disposisis_id);
+            $('#bidangs_id').val(data.bidangs_id);
             $('#jam_agenda').val(data.jam_agenda);
             $('#tanggal_agenda').val(data.tanggal_agenda);
             $('#isi').val(data.isi);

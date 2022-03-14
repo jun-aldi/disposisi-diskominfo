@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agenda;
+use App\Models\Disposisi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -17,12 +18,14 @@ class AgendaDatatablesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Agenda::select(['id','disposisi_id', 'jam_agenda','tanggal_agenda','isi','tempat','keterangan']);
+            $data = Agenda::select(['id','disposisis_id', 'jam_agenda','bidangs_id','tanggal_agenda','isi','tempat','keterangan'])
+            ->with(['disposisi'])
+            ->with(['bidang']);
             return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action',function($data){
-                $btn =' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteAgenda">Delete</a>';
-                $btn .='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editAgenda">Edit</a>';
+                $btn =' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteAgenda mx-1 my-2">Delete</a>';
+                $btn .='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editAgenda mx-1 my-2">Edit</a>';
                 return $btn;
             })
             ->rawColumns(['action'])->make(true);
@@ -50,6 +53,8 @@ class AgendaDatatablesController extends Controller
     {
 
         request()->validate([
+            // 'disposisis_id'=>'required',
+            'bidangs_id'=>'required',
             'jam_agenda'=>'required',
             'tanggal_agenda'=>'required',
             'isi'=>'required',
@@ -60,25 +65,49 @@ class AgendaDatatablesController extends Controller
 
 
         Agenda::updateOrCreate(['id' => $request->id], [
-            'disposisi_id' => $request->disposisi_id,
+            'disposisis_id' => $request->disposisis_id,
             'jam_agenda' => $request->jam_agenda,
             'tanggal_agenda' => $request->tanggal_agenda,
             'isi' => $request->isi,
+            'bidangs_id' => $request->bidangs_id,
             'tempat' => $request->tempat,
             'keterangan' => $request->keterangan,
-
         ]);
         // $agenda = Agenda::where('id', $request->id)->first();
-        // $agenda->disposisi_id= $request->disposisi_id;
-        // $agenda->jam_agenda = $request->jam_agenda;
-        // $agenda->tanggal_agenda= $request->tanggal_agenda;
-        // $agenda->isi = $request->isi;
-        // $agenda->tempat= $request->tempat;
-        // $agenda->keterangan = $request->keterangan;
+        // $validatedData = $request->validate([
+        //     // 'dari'=>'required',
+        //     // // 'tanggal_dibuat'=>'required',
+        //     // 'no_surat'=>'required',
+        //     // 'isi_surat'=>'required',
+        //     // // 'no_agenda'=>'required',
+        //     // // 'tanggal_diterima'=>'required',
+        //     // 'bidangs_id'=>'required',
+        //     // // 'status_id'=>'required',
+        //     // 'filename' => 'required|mimes:pdf|max:2048',
+        //   ]);
+
+        //   $name = md5($request->filename . microtime()).'.'.$request->filename->extension();
+
+        //   $request->filename->storeAs('disposisi');
+        //   $status_id = 3;
+        //   $emp = new Disposisi();
+        //   $today = date('Y-m-d');
+        //   $emp->dari = $request->dari;
+        //   $emp->tanggal_dibuat = $today;
+        //   $emp->no_surat = $request->no_surat;
+        //   $emp->isi_surat = $request->isi_surat;
+        //   $emp->agendas_id = $request->agendas_id;
+        //   $emp->tanggal_diterima = $request->tanggal_diterima;
+        //   $emp->bidangs_id = $request->bidangs_id;
+        //   $emp->status_id = $status_id;
+        //   $emp->users_id = auth()->id();
+        //   $emp->filename = $name;
+
+        //   $emp->save();
 
         // $agenda->save();
 
-return response()->json(['success'=>'Agenda berhasil disimpan']);
+        return response()->json(['success'=>'Data berhasil disimpan.']);
     }
 
     /**

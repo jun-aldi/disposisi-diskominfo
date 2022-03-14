@@ -57,7 +57,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h5 class="card-title fw-bold">Kepada : {{$disposisi->kepada}}</h5>
+                                            @if ($disposisi->bidangs_id==1)
+                                            <h5 class="card-title fw-bold">Kepada : Kepala Diskominfo</h5>
+                                            @elseif ($disposisi->bidangs_id==2)
+                                            <h5 class="card-title fw-bold">Kepada : Kepala Sekretariat Diskominfo</h5>
+                                            @elseif ($disposisi->bidangs_id==3)
+                                            <h5 class="card-title fw-bold">Kepada : Kepala Bidang Tata Kelola Informatika</h5>
+                                            @else
+                                            <h5 class="card-title fw-bold">Kepada : Kepala Bidang Informasi dan Komunikasi Publik</h5>
+                                            @endif
+
                                             <p>Isi Surat :</p>
                                           <p class="card-text text-justify">{{$disposisi->isi_surat}}</p>
                                           <p class="fw-lighter" style="color: grey">{{ date('d/m/Y',strtotime($disposisi->tanggal_dibuat)) }}</p>

@@ -49,10 +49,40 @@
                           <form action="{{url('store-disposisi-user')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label" for="no_surat">No Surat:</label>
+                                <label class="col-sm-3 col-form-label" for="surats_id">Jenis Surat :</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="no_surat" name="no_surat" placeholder="No Surat" required>
-                                    @error('no_surat')
+                                    <select  name="surats_id" id="surats_id" class="form-select" aria-label="Default select example">
+                                        <option value="1">Surat Keputusan</option>
+                                        <option value="2">Surat Undangan</option>
+                                        <option value="3">Surat Permohonan</option>
+                                        <option value="4">Surat Pemberitahuan</option>
+                                        <option value="5">Surat Peminjaman</option>
+                                        <option value="6">Surat Pernyataan</option>
+                                        <option value="7">Surat Mandat</option>
+                                        <option value="8">Surat Tugas</option>
+                                        <option value="9">Surat Keterangan</option>
+                                        <option value="10">Surat Rekomendasi</option>
+                                        <option value="11">Surat Balasan</option>
+                                        <option value="12">Surat Perintah Perjalanan Dinas</option>
+                                        <option value="13">Sertifikat</option>
+                                        <option value="14">Perjanjian Kerja</option>
+                                        <option value="15">Surat Pengantar</option>
+                                      </select>
+                                    @error('surats_id')
+                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-3 col-form-label" for="bidangs_id">Surat Kepada:</label>
+                                <div class="col-sm-9">
+                                    <select  name="bidangs_id" id="bidangs_id" class="form-select" aria-label="Default select example">
+                                        <option value="1">Kepala Diskominfo</option>
+                                        <option value="2">Sekretariat Diskominfo</option>
+                                        <option value="3">Bidang Tata Kelola Informatika</option>
+                                        <option value="4">Bidang Informasi dan Komunikasi Publik</option>
+                                      </select>
+                                    @error('bidangs_id')
                                     <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -67,24 +97,6 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label" for="tanggal_dibuat">Tanggal Dibuat:</label>
-                                <div class="col-sm-9">
-                                    <input placeholder="masukkan tanggal Akhir" type="date" class="form-control datepicker" name="tanggal_dibuat" id="tanggal_dibuat" required >
-                                    @error('tanggal_dibuat')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label" for="tanggal_diterima">Tanggal Diterima:</label>
-                                <div class="col-sm-9">
-                                    <input id="tanggal_diterima" placeholder="masukkan tanggal Akhir" type="date" class="form-control datepicker" name="tanggal_diterima" required>
-                                    @error('tanggal_diterima')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label" for="isi_surat">Isi Surat:</label>
                                 <div class="col-sm-9">
                                     <textarea rows="10" name="isi_surat" class="form-control" id="isi_surat" placeholder="Isi Surat" required></textarea>
@@ -93,19 +105,14 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label" for="kepada">Surat Kepada:</label>
-                                <div class="col-sm-9">
-                                    <input  type="text" name="kepada" class="form-control" id="kepada" placeholder="Surat Kepada" required>
-                                    @error('kepada')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+
                             <div class="row mb-3">
                                 <label class="col-sm-3 col-form-label" for="filename">Upload Surat:</label>
                                 <div class="col-sm-9">
                                     <input type="file" class="form-control" name="filename" id="filename" >
+                                    @error('filename')
+                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                    @enderror
                                     <p>!!PDF UKURAN MAKSIMAL 2MB</p>
                                 </div>
                             </div>

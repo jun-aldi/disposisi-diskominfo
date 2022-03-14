@@ -17,23 +17,29 @@ class Agenda extends Model
      * @var string[]
      */
     protected $fillable = [
-        'disposisi_id',
+        'disposisis_id',
         'jam_agenda',
         'tanggal_agenda',
         'isi',
+        'bidangs_id',
         'tempat',
         'keterangan',
     ];
 
-    public function disposisi_agenda()
+    public function disposisi()
     {
-        return $this->hasOne(Disposisi::class, 'disposisi_id', 'id');
+        return $this->hasOne(Disposisi::class, 'id', 'disposisis_id');
+    }
+    public function bidang()
+    {
+        return $this->hasOne(Bidang::class, 'id', 'bidangs_id');
     }
 
     Use Sortable;
     protected $sortable = [
         'id',
-        'disposisi_id',
+        'disposisis_id',
+        'bidangs_id',
         'jam_agenda',
         'tanggal_agenda',
         'isi',
