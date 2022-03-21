@@ -24,21 +24,25 @@
             </div>
         </div>
     </div> --}}
-    <div class="container-fluid">
+    <div class="container-fluid my-2">
         <div class="row">
             <div class="col-xl-12 p-0">
                 <div class="jumbotron min-vh-100 m-0 d-flex flex-column justify-content-center">
                     <div class="row d-flex justify-content-center my-auto" >
-                        <div class="col-xl-6 col-sm-12">
-                            <div class="container justify-content-center" data-aos="fade-right" data-aos-duration="1000">
-                                <h1 class="fw-bolder" style="color: #173D7A">SURAT MASUK DAN AGENDA DISKOMINFO KABUPATEN KARANGANYAR</h1>
-                                <p class="lh-base">Aplikasi Lembar Surat Masuk Elektronik dan Agenda secara realtime Diskominfo Kabupaten Karanganyar</p>
-                                <button class="btn btn-mulai btn-rounded">Mulai</button>
+                        <div class="col-xl-1 my-4"></div>
+                        <div class="col-xl-5 col-sm-12 row my-4">
+                            <div class="col-12"></div>
+                            <div class="container justify-content-center col-12" data-aos="fade-right" data-aos-duration="1000">
+                                <h1 class="fw-bolder display-5" style="font-family: 'Poppins';color: #4F9FDB">AGENDA SURAT DAN KEGIATAN DISKOMINFO KABUPATEN KARANGANYAR</h1>
+                                <p class="lh-base">Aplikasi Agenda Surat dan Kegiatan di Diskominfo Kabupaten Karanganyar</p>
+                                {{-- <a href="{{url('form-disposisi-masuk')}}" class="btn btn-mulai btn-rounded">Mulai</a> --}}
+                                <button href="{{url('form-disposisi-masuk')}}" class="btn btn-mulai btn-rounded"> <a style="text-decoration:none; color:white" href="{{url('form-disposisi-masuk')}}">Mulai</a> </button>
                             </div>
-
+                            <div class="col-12"></div>
                         </div>
-                        <div class="col-xl-5 col-sm-2" data-aos-duration="1000" data-aos="fade-left">
-                            <img src="{{ asset('img/LP-1.png') }}" alt="landingPage1"  srcset="" class="img-fluid img-landing">
+                        <div class="col-xl-1"></div>
+                        <div class="col-xl-5 my-4 col-sm-1" data-aos-duration="1000" data-aos="fade-left">
+                            <img src="{{ asset('img/Asset 1.png') }}" alt="landingPage1"  srcset="" class="img-fluid img-landing">
                         </div>
 
                     </div>

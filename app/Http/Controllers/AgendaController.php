@@ -66,7 +66,7 @@ class AgendaController extends Controller
             $hari = $dayList[$day];
         }
         elseif (!empty($filter)&&!empty($filter2)) {
-            $agendas = Agenda::sortable(['tanggal_agenda' => 'desc'])
+            $agendas = Agenda::sortable(['tanggal_agenda' => 'asc'])
                 // ->where('agendas.tanggal_agenda', 'like', '%'.$filter.'%')
                 // ->whereBetween('agendas.tanggal_agenda', [$filter, $date_now2])
                 ->where('agendas.tanggal_agenda', '>=', $filter)

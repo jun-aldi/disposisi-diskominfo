@@ -40,6 +40,7 @@ class DisposisiDashboardController2 extends Controller
         request()->validate([
             'dari'=>'required',
             'tanggal_dibuat'=>'required',
+            'no_agenda'=>'required',
             'no_surat'=>'required',
             'isi_surat'=>'required',
             'tanggal_diterima'=>'required',
@@ -56,7 +57,9 @@ class DisposisiDashboardController2 extends Controller
         Disposisi::updateOrCreate(['id' => $request->id], [
             'dari' => $request->dari,
             'tanggal_dibuat' => $request->tanggal_dibuat,
+            'no_agenda' => $request->no_agenda,
             'no_surat' => $request->no_surat,
+            'sifat' => $request->sifat,
             'isi_surat' => $request->isi_surat,
             'tanggal_diterima' => $request->tanggal_diterima,
             'surats_id' => $request->bidangs_id,

@@ -18,8 +18,8 @@ class AgendaDatatablesController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Agenda::select(['id','disposisis_id', 'jam_agenda','bidangs_id','tanggal_agenda','isi','tempat','keterangan'])
-            ->with(['disposisi'])
+            $data = Agenda::select(['id','disposisis_id','jam_agenda','disposisi','bidangs_id','tanggal_agenda','isi','tempat','keterangan','disposisi'])
+            ->with(['disposisis'])
             ->with(['bidang']);
             return DataTables::of($data)
             ->addIndexColumn()
@@ -27,6 +27,18 @@ class AgendaDatatablesController extends Controller
                 $btn =' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteAgenda mx-1 my-2">Delete</a>';
                 $btn .='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editAgenda mx-1 my-2">Edit</a>';
                 return $btn;
+            })
+            ->filter(function ($instance) use ($request) {
+                if ($request->get('bidang_filter') == '1' || $request->get('bidang_filter') == '2' ||$request->get('bidang_filter') == '3' || $request->get('bidang_filter') == '4'){
+                    $instance->where('bidangs_id', $request->get('bidang_filter'));
+                }
+                if (!empty($request->get('search'))) {
+                     $instance->where(function($w) use($request){
+                        $search = $request->get('search');
+                        $w->orWhere('bidangs_id', 'LIKE', "%$search%");
+
+                    });
+                }
             })
             ->rawColumns(['action'])->make(true);
         }
@@ -59,7 +71,6 @@ class AgendaDatatablesController extends Controller
             'tanggal_agenda'=>'required',
             'isi'=>'required',
             'tempat'=>'required',
-            'keterangan'=>'required',
         ]);
 
 
@@ -72,6 +83,7 @@ class AgendaDatatablesController extends Controller
             'bidangs_id' => $request->bidangs_id,
             'tempat' => $request->tempat,
             'keterangan' => $request->keterangan,
+            'disposisi' => $request->disposisi,
         ]);
         // $agenda = Agenda::where('id', $request->id)->first();
         // $validatedData = $request->validate([

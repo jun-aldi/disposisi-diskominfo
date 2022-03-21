@@ -3,7 +3,7 @@
     @section('konten')
 
     <div class="container my-4">
-        <h1 class="text-center fw-bold">DISPOSISI LIST DISKOMINFO KABUPATEN KARANGANYAR</h1>
+        <h1 class="text-center fw-bold">SURAT KELUAR LIST DISKOMINFO KABUPATEN KARANGANYAR</h1>
 
         @if(session('status'))
         <div class="alert alert-success">
@@ -15,10 +15,9 @@
 
     <div class="col-4 border my-2 mx-2 py-2 py-3">
         <div class="form-group">
-            <label for="bidang_filter" class="control-label fw bolder">Kepada</label>
+            <label for="bidang_filter" class="control-label fw bolder">Pengolah</label>
             <select  name="bidang_filter" id="bidang_filter" class="form-select" aria-label="Default select example">
                 <option value="">Semua</option>
-                <option value="1">Kepala Diskominfo</option>
                 <option value="2">Sekretariat Diskominfo</option>
                 <option value="3">Bidang Tata Kelola Informatika</option>
                 <option value="4">Bidang Informasi dan Komunikasi Publik</option>
@@ -26,42 +25,29 @@
         </div>
     </div>
 
-        <div class="col-md-12 mb-4 text-left">
-            <a class="btn btn-info" href="javascript:void(0)" id="createNewProduct">Buat Baru</a>
-
-        </div>
 
 
 
             <div class="table-responsive">
-                <table class="table table-hover table-bordered table-striped" id="table-disposisi">
+                <table class="table table-hover table-bordered table-striped" id="table-keluar">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Status</th>
-                            <th>Dari</th>
-                            <th>Tanggal Surat</th>
                             <th>No Surat</th>
-                            <th>Sifat Surat</th>
-                            <th>No Agenda</th>
-                            <th>Jenis Surat</th>
-                            <th>Isi Surat</th>
-                            <th>Tanggal Diterima</th>
+                            <th>Tanggal Surat</th>
                             <th>Kepada</th>
-                            <th>Surat</th>
+                            <th>Pengolah Surat</th>
+                            <th>Ringkasan Isi Surat</th>
+                            <th>Sifat Surat</th>
+                            <th>Jenis Surat</th>
+                            <th>Lihat Surat</th>
                             <th>User</th>
-                            <th>Kepala</th>
-                            <th>Sekretaris</th>
-                            <th>Disposisi</th>
                             <th>Edit</th>
                             <th>Hapus</th>
-                            <th>Buat Agenda</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <td></td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -91,7 +77,6 @@
                         <form id="disposisiEditForm" name="disposisiEditForm" class="form-horizontal">
                         <input type="hidden" name="id" id="id">
                         <input type="hidden" name="users_id" id="users_id">
-                        <input type="hidden" name="no_agenda" id="no_agenda">
                         <input type="hidden" name="filename" id="filename">
                         <div class="form-group">
                             <label for="surats_id" class="col-sm-2 control-label">Jenis Surat</label>
@@ -113,16 +98,6 @@
                                 <option value="15">Surat Pengantar</option>
                               </select>
                         </div>
-
-                        <div class="form-group">
-                            <label for="bidangs_id" class="col-sm-2 control-label">Kepada</label>
-                            <select  name="bidangs_id" id="bidangs_id" class="form-select col-sm-12" aria-label="Default select example">
-                                <option value="1">Kepala Diskominfo</option>
-                                <option value="2">Kepala Sekretariat Diskominfo</option>
-                                <option value="3">Kepala Bidang Tata Kelola Informatika</option>
-                                <option value="4">Kepala Bidang Informasi dan Komunikasi Publik</option>
-                              </select>
-                        </div>
                         <div class="form-group">
                             <label for="no_surat" class="col-sm-2 control-label">No Surat</label>
                             <div class="col-sm-12">
@@ -131,57 +106,21 @@
                         </div>
                         <div class="form-group">
                             <label for="sifat" class="col-sm-2 control-label">Sifat</label>
-                            <div class="col-sm-4">
-                                <select  name="sifat" id="sifat" class="form-select" aria-label="Default select example">
-                                    <option value="Biasa">Biasa</option>
-                                    <option value="Segera">Segera</option>
-                                    <option value="Penting">Penting</option>
-                                    <option value="Rahasia">Rahasia</option>
-                                  </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="dari" class="col-sm-2 control-label">Surat Dari</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="dari" name="dari" placeholder="Surat Dari" value="" maxlength="50" required="">
+                                <input type="text" class="form-control" id="sifat" name="sifat" placeholder="Sifat Surat" value="" maxlength="50" required="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_dibuat" class="col-sm-2 control-label">Tanggal Dibuat</label>
+                            <label for="tanggal_surat" class="col-sm-2 control-label">Tanggal Surat</label>
                             <div class="col-sm-12">
-                                <input type="date" class="form-control" id="tanggal_dibuat" name="tanggal_dibuat" placeholder="Tanggal Dibuat" value="" maxlength="50" required="">
+                                <input type="date" class="form-control" id="tanggal_surat" name="tanggal_surat" placeholder="Tanggal Surat" value="" maxlength="50" required="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_diterima" class="col-sm-2 control-label">Tanggal Diterima</label>
+                            <label for="kepada" class="col-sm-2 control-label">Kepada</label>
                             <div class="col-sm-12">
-                                <input type="date" class="form-control" id="tanggal_diterima" name="tanggal_diterima" placeholder="Tanggal Diterima" value="" maxlength="50" required="">
+                                <input type="text" class="form-control" id="kepada" name="kepada" placeholder="Kepada" value="" maxlength="50" required="">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Isi Surat</label>
-                            <div class="col-sm-12">
-                                <textarea id="isi_surat" name="isi_surat" required="" placeholder="Isi Surat" class="form-control" maxlength="200"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Disposisi Kepala</label>
-                            <div class="col-sm-12">
-                                <textarea id="disposisi_kepala" name="disposisi_kepala" required="" placeholder="Disposisi Kepala" class="form-control" maxlength="200"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Disposisi Sekretaris</label>
-                            <div class="col-sm-12">
-                                <textarea id="disposisi_sekretaris" name="disposisi_sekretaris" required="" placeholder="Disposisi Sekretaris" class="form-control" maxlength="200"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="status_id" class="col-sm-2 control-label">Status</label>
-                            <select  name="status_id" id="status_id" class="form-select" aria-label="Default select example">
-                                <option value="1">Diterima</option>
-                                <option value="3">Diproses</option>
-                              </select>
                         </div>
                         <div class="col-sm-10 bg-danger"><p id="saveError"></p></div>
                         <div class="col-sm-offset-2 col-sm-10">
@@ -193,7 +132,7 @@
             </div>
         </div>
 
-        {{-- Create New --}}
+        {{-- Create New
         <div class="modal fade" id="ajaxCreate" aria-hidden="true" >
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -242,16 +181,10 @@
                         </div>
                         <div class="form-group">
                             <label for="sifat" class="col-sm-2 control-label">Sifat</label>
-                            <div class="col-sm-4">
-                                <select  name="sifat" id="sifat" class="form-select" aria-label="Default select example">
-                                    <option value="Biasa">Biasa</option>
-                                    <option value="Segera">Segera</option>
-                                    <option value="Penting">Penting</option>
-                                    <option value="Rahasia">Rahasia</option>
-                                  </select>
+                            <div class="col-sm-12">
+                                <input type="text" class="sifat" id="sifat" name="sifat" placeholder="Sifat Surat" value="" maxlength="50" required="">
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="dari" class="col-sm-2 control-label">Surat Dari</label>
                             <div class="col-sm-12">
@@ -288,6 +221,7 @@
                             <label for="status_id" class="col-sm-2 control-label">Status</label>
                             <select  name="status_id" id="status_id" class="form-select" aria-label="Default select example">
                                 <option value="1">Diterima</option>
+                                <option value="2">Ditolak</option>
                                 <option value="3">Diproses</option>
                               </select>
                         </div>
@@ -299,85 +233,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-                    {{-- Create New Agenda--}}
-                    <div class="modal fade" id="ajaxCreateNewAgenda" aria-hidden="true" >
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="modelHeading"></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="agendaCreateForm" name="agendaCreateForm" class="form-horizontal" e method="post" >
-                                        <div class="form-group">
-                                            <label for="name" class="col-sm-2 control-label">Disposisi id</label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="disposisis_id" name="disposisis_id" placeholder="Tempat Agenda" value="" maxlength="50" required="" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bidangs_id" class="col-sm-2 control-label">Kepada</label>
-                                            <div class="col-sm-12">
-                                                <select  name="bidangs_id" id="bidangs_id" class="form-select" aria-label="Default select example">
-                                                    <option value="1">Kepala Diskominfo</option>
-                                                    <option value="2">Sekretariat Diskominfo</option>
-                                                    <option value="3">Bidang Tata Kelola Informatika</option>
-                                                    <option value="4">Bidang Informasi dan Komunikasi Publik</option>
-                                                  </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="jam_agenda" class="col-sm-2 control-label">Jam Agenda</label>
-                                            <div class="col-sm-4">
-                                                <input type="time" class="form-control" id="jam_agenda" name="jam_agenda" placeholder="Jam Agenda" value="" maxlength="50" required="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="tanggal_agenda" class="col-sm-2 control-label">Tanggal Agenda</label>
-                                            <div class="col-sm-4">
-                                                <input type="date" class="form-control" id="tanggal_agenda" name="tanggal_agenda" placeholder="Tanggal Agenda" value="" maxlength="50" required="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="isi" class="col-sm-2 control-label">Isi Agenda</label>
-                                            <div class="col-sm-12">
-                                                <textarea name="isi" id="isi" placeholder="Isi Agenda" class="col-sm-12"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">Tempat</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Agenda" value="" maxlength="50" required="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan Agenda" value="" maxlength="50" required="">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="isi" class="col-sm-2 control-label">Isi Agenda</label>
-                                            <div class="col-sm-12">
-                                                <textarea name="isi" id="isi" placeholder="Isi Agenda" class="col-sm-12"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="isi" class="col-sm-2 control-label"></label>
-                                            <div class="col-sm-12">
-                                                <textarea name="isi" id="isi" placeholder="Isi Agenda" class="col-sm-12"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-10"  style="color: red"><p id="saveError"></p></div>
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-primary" id="saveBtnCreateAgenda" value="create">Simpan</button>
-                                        </div>
-                                </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
 
@@ -396,7 +253,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var table = $('#table-disposisi').DataTable({
+        var table = $('#table-keluar').DataTable({
             lengthMenu: [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Semua"]],
 
             dom: 'lBfrtip',
@@ -406,7 +263,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-            url: "{{ route('disposisis.index') }}",
+            url: "{{ route('keluar-dashboard.index') }}",
             data: function (d) {
                     d.bidang_filter = $('#bidang_filter').val(),
                     d.search = $('input[type="search"]').val()
@@ -417,27 +274,20 @@
             columns : [
 
                 {data: 'id', name: 'id'},
-                {data: 'status_id', name: 'status_id'},
-                {data: 'dari', name: 'dari'},
-                {data: 'tanggal_dibuat', name: 'tanggal_dibuat'},
                 {data: 'no_surat', name: 'no_surat'},
+                {data: 'tanggal_surat', name: 'tanggal_surat'},
+                {data: 'kepada', name: 'kepada'},
+                {data: 'bidang.name', name: 'bidangs.name'},
+                {data: 'isi', name: 'isi'},
                 {data: 'sifat', name: 'sifat'},
-                {data: 'no_agenda', name: 'no_agenda'},
-                {data: 'surat.name', name: 'surat.name'},
-                {data: 'isi_surat', name: 'isi_surat'},
-                {data: 'tanggal_diterima', name: 'tanggal_diterima'},
-                {data: 'bidang.name', name: 'bidang.name'},
+                {data: 'surat.name', name: 'surats.name'},
                 {data: 'action', name: 'action'},
                 {data: 'users.name', name: 'users.name'},
-                {data: 'disposisi_kepala', name: 'disposisi_kepala'},
-                {data: 'disposisi_sekretaris', name: 'disposisi_sekretaris'},
-                {data: 'lihatpdf', name: 'lihatpdf'},
                 {data: 'edit', name: 'edit'},
                 {data: 'delete', name: 'delete'},
-                {data: 'createAgenda', name: 'createAgenda'},
             ],
             'columnDefs': [ {
-                'targets': [1,8,10,11,12,13,15,16,17,18], /* column index */
+                'targets': [8,10,11], /* column index */
                 'orderable': false, /* true or false */
             }],
             initComplete: function () {
@@ -457,79 +307,20 @@
     });
 
 
-        $('#createNewProduct').click(function () {
-            $('#saveBtnCreate').val("create-product");
-            $('#id').val('');
-            $('#disposisiCreateForm').trigger("reset");
-            $('#modelHeading').html("Create New Product");
-            $('#ajaxCreate').modal('show');
-        });
-
-
-        $('body').on('click', '.createNewAgenda', function () {
-            var disposisis_id = $(this).data('id');
-            // $('#ajaxCreateNewAgenda').modal('show');
-            // console.log("4");
-            // console.log(disposisis_id);
-            // $('#modelHeading').html();
-            // $('#disposisis_id').val(disposisis_id);
-            // $('#bidangs_id').val();
-            $.get("{{ route('disposisis.index') }}" +'/' + disposisis_id +'/edit', function (data) {
-            $('#saveBtnCreateAgenda').val("edit-user");
-            $('#modelHeading').html('Buat Agenda');
-            $('#ajaxCreateNewAgenda').modal('show');
-            $('#bidangs_id').val(disposisis_id);
-            $('#disposisis_id').val(disposisis_id);
-            })
-        });
-        $('#saveBtnCreateAgenda').click(function (e) {
-            e.preventDefault();
-            $(this).html('Sending..');
-
-            $.ajax({
-                data: $('#agendaCreateForm').serialize(),
-                url: "{{ route('agenda-dashboard.store')}}",
-                type: "POST",
-                dataType: 'json',
-                success: function (data) {
-                    console.log(data);
-                    table.draw();
-                    $('#agendaCreateForm').trigger("reset");
-                    $('#ajaxCreateNewAgenda').modal('hide');
-                    $('#saveBtnCreate').html('Simpan');
-                },
-                error: function (data) {
-                    $('#saveError').html('Terdapat Kesalahn dalam megisi form');
-                    $('#saveBtnCreate').html('Save Changes');
-                }
-            });
-
-        });
-
-
-
-
         $('body').on('click', '.editDisposisi', function () {
-            var disposisis_id = $(this).data('id');
-            $.get("{{ route('disposisis.index') }}" +'/' + disposisis_id +'/edit', function (data) {
-            $('#modelHeading').html("Edit Disposisi");
+            var surat_keluars_id = $(this).data('id');
+            $.get("{{ route('keluar-dashboard.index') }}" +'/' + surat_keluars_id +'/edit', function (data) {
+            $('#modelHeading').html("Edit Surat Keluar");
             $('#saveBtnEdit').val("edit-user");
             $('#ajaxEdit').modal('show');
-            $('#modalHeading').html('Edit Agenda Disposisi Masuk');
             $('#id').val(data.id);
-            $('#no_agenda').val(data.no_agenda);
             $('#no_surat').val(data.no_surat);
+            $('#tanggal_surat').val(data.tanggal_surat);
+            $('#kepada').val(data.kepada);
+            $('#bidangs_id').val(data.bidangs_id);
+            $('#isi').val(data.isi);
             $('#sifat').val(data.sifat);
             $('#surats_id').val(data.surats_id);
-            $('#dari').val(data.dari);
-            $('#tanggal_dibuat').val(data.tanggal_dibuat);
-            $('#tanggal_diterima').val(data.tanggal_diterima);
-            $('#isi_surat').val(data.isi_surat);
-            $('#bidangs_id').val(data.bidangs_id);
-            $('#disposisi_kepala').val(data.disposisi_kepala);
-            $('#disposisi_sekretaris').val(data.disposisi_sekretaris);
-            $('#status_id').val(data.status_id);
-            $('#users_id').val(data.users_id);
             })
         });
         $('#saveBtnEdit').click(function (e) {
@@ -539,7 +330,7 @@
 
             $.ajax({
                 data: $('#disposisiEditForm').serialize(),
-                url: "{{ route('disposisis.store') }}",
+                url: "{{ route('keluar-dashboard.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
@@ -565,12 +356,12 @@
 
 
         $('body').on('click', '.deleteDisposisi', function (){
-            var disposisis_id = $(this).data("id");
+            var surat_keluars_id = $(this).data("id");
             var result = confirm("Are You sure want to delete !");
             if(result){
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('disposisis.store') }}"+'/'+disposisis_id,
+                    url: "{{ route('keluar-dashboard.store') }}"+'/'+surat_keluars_id,
                     success: function (data) {
                         table.draw();
                     },

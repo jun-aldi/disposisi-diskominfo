@@ -14,7 +14,7 @@ class DashboardDisposisi extends Controller
     }
 
     public function list(){
-        $disposisis = Disposisi::select(['id','dari', 'tanggal_dibuat','no_surat','isi_surat','tanggal_diterima','kepada','status_id','users_id']);
+        $disposisis = Disposisi::select(['id','dari', 'tanggal_dibuat','no_agenda', 'sifat','no_surat','isi_surat','tanggal_diterima','kepada','status_id','users_id']);
         return DataTables::of($disposisis)
         ->editColumn('status_id',function($data_disposisi){
             if($data_disposisi->status_id == 1){

@@ -23,6 +23,11 @@ class Bidang extends Model
     {
         return $this->hasMany(Disposisi::class, 'bidangs_id', 'id');
     }
+
+    public function Surat_masuk_bidang()
+    {
+        return $this->hasMany(SuratMasuk::class, 'bidangs_id', 'id');
+    }
     public function agenda_bidang()
     {
         return $this->hasMany(Agenda::class, 'bidangs_id', 'id');

@@ -1,9 +1,4 @@
-button.btn.btn-mulai {
-    background-color: #FF2C9C;
-    color: white;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
+
 .fade-in{
     transition: 1s;
     transform: translateY(100px);

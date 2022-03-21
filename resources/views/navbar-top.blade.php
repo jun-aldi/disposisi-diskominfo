@@ -10,13 +10,12 @@
             </a>
             <div class="navbar-nav ms-auto">
                 <div class="navbar-nav">
-                    <a href="{{ url('/') }}" class="nav-item nav-link active">Home</a>
+                    <a href="{{ url('/') }}" class="nav-item nav-link active ">Home</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Disposisi</a>
+                        <a href="#" class="nav-link dropdown-toggle active " data-bs-toggle="dropdown">Surat</a>
                         <div class="dropdown-menu">
                             <a href="{{url('form-disposisi-masuk')}}" class="dropdown-item">Buat Surat Masuk</a>
-
-                            <a href="{{url('disposisi-users')}}" class="dropdown-item">Surat Saya</a>
+                            <a href="{{url('form-surat-keluar')}}" class="dropdown-item">Buat Surat Keluar</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -32,7 +31,7 @@
                 @if (Route::has('login'))
                     @auth
                     @if(Auth::check() && Auth::user()->roles == "ADMIN")
-                    <a  href="{{ route('dashboard') }}" class="nav-item nav-link active">Dashboard </a>
+                    <a  href="{{ route('dashboard') }}" class="nav-item nav-link active ">Dashboard </a>
                     @endif
                         <x-jet-dropdown id="navbarDropdown" class="user-menu">
                             <x-slot name="trigger">

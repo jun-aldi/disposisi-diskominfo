@@ -6,6 +6,7 @@
 
 <!-- Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
 {{-- bootstrap --}}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -25,14 +26,21 @@
 
 <style>
     body {
-        font-family: 'Poppins';
+        font-family: 'Montserrat';
         background: white;
     }
-    button.btn.btn-mulai:hover {
-background-color: #f547a7;
+button.btn.btn-mulai:hover {
+background-color: #0b2042;
 color: white    ;
 font-weight: 600;
 letter-spacing: 1px;
+}
+
+button.btn.btn-mulai {
+    background-color: #084C94;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
 </style>

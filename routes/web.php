@@ -8,8 +8,12 @@ use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\DisposisiDashboardController;
 use App\Http\Controllers\DisposisiDashboardController2;
 use App\Http\Controllers\ProfileShow;
+use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\SuratKeluarDashboard;
+use App\Http\Controllers\SuratMasukDashboard;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ViewDisposisiUser;
+use App\Http\Controllers\ViewSuratKeluar;
 use App\Http\Livewire\AgendaCrud;
 use App\Http\Livewire\DisposisiCrud;
 use App\Http\Livewire\EditDisposisi;
@@ -48,7 +52,10 @@ Route::get('agenda-ikp', [AgendaController::class, 'indexIkp'])->name('agenda-ik
 
 //admin route
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
+    Route::post('/download-keluar/{id}', [ViewSuratKeluar::class, 'download'])->name('downloadsuratkeluar');
 
+    Route::get('form-surat-keluar', [SuratKeluarController::class, 'index']);
+    Route::post('store-surat-keluar-user', [SuratKeluarController::class, 'store']);
 
     Route::get('/profile.show', [ProfileShow::class, 'index'])->name('profile.show');
 
@@ -59,6 +66,8 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
     Route::resource('agenda-dashboard', AgendaDatatablesController::class);
 
     Route::resource('disposisis2', DisposisiDashboardController2::class);
+
+    Route::resource('keluar-dashboard', SuratKeluarDashboard::class);
 
     Route::post('/disposisis/{id}', [DisposisiDashboardController::class, 'buat'])->name('disposisibuat');
     Route::resource('disposisis', DisposisiDashboardController::class);
@@ -73,7 +82,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->group(function () {
     Route::post('/lihatPDF/{id}', [ViewDisposisiUser::class, 'lihatPDF'])->name('lihatpdf');
 
     Route::get('disposisi-users', [ViewDisposisiUser::class, 'index']);
-    Route::get('disposisi-users/list', [ViewDisposisiUser::class, 'getDisposisi'])->name('disposisi-users.list');
+    // Route::get('disposisi-users/list', [ViewDisposisiUser::class, 'getDisposisi'])->name('disposisi-users.list');
     Route::post('print',[ViewDisposisiUser::class, 'print'])->name('print');
 
 
@@ -112,7 +121,7 @@ Route::middleware(['auth:sanctum', 'verified',])->group(function () {
     Route::post('/download/{id}', [ViewDisposisiUser::class, 'download'])->name('downloadfile');
     Route::post('/lihatPDF/{id}', [ViewDisposisiUser::class, 'lihatPDF'])->name('lihatpdf');
     Route::get('disposisi-users', [ViewDisposisiUser::class, 'index']);
-    Route::get('disposisi-users/list', [ViewDisposisiUser::class, 'getDisposisi'])->name('disposisi-users.list');
+    // Route::get('disposisi-users/list', [ViewDisposisiUser::class, 'getDisposisi'])->name('disposisi-users.list');
     Route::post('print',[ViewDisposisiUser::class, 'print'])->name('print');
 
 

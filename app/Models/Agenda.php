@@ -24,9 +24,10 @@ class Agenda extends Model
         'bidangs_id',
         'tempat',
         'keterangan',
+        'disposisi',
     ];
 
-    public function disposisi()
+    public function disposisis()
     {
         return $this->hasOne(Disposisi::class, 'id', 'disposisis_id');
     }

@@ -46,38 +46,24 @@ class ViewDisposisiUser extends Controller
         $agendas = Agenda::where('disposisis_id', $id)->first();
 
 
-        if (!empty($agendas)){
-            $data = [
-                $disposisi = Disposisi::findOrFail($id),
-                "id" => $this->id=$disposisi->id,
-                "dari" => $this->dari = $disposisi->dari,
-                "tanggal_dibuat" => $this->tanggal_dibuat = $disposisi->tanggal_dibuat,
-                "no_surat" => $this->no_surat = $disposisi->no_surat,
-                "isi_surat" => $this->isi_surat = $disposisi->isi_surat,
-                "tanggal_diterima" => $this->tanggal_diterima = $disposisi->tanggal_diterima,
-                "bidangs_id" => $this->bidangs_id = $disposisi->bidangs_id,
-                "status_id" => $this->status_id = $disposisi->status_id,
-                "users_id" => $this->users_id = $disposisi->users_id,
-                "no_agenda" => $agendas->id,
+        $data = [
+            $disposisi = Disposisi::findOrFail($id),
+            "id" => $this->id=$disposisi->id,
+            "dari" => $this->dari = $disposisi->dari,
+            "tanggal_dibuat" => $this->tanggal_dibuat = $disposisi->tanggal_dibuat,
+            "no_agenda" => $this->no_agenda = $disposisi->no_agenda,
+            "no_surat" => $this->no_surat = $disposisi->no_surat,
+            "sifat" => $this->sifat = $disposisi->sifat,
+            "isi_surat" => $this->isi_surat = $disposisi->isi_surat,
+            "tanggal_diterima" => $this->tanggal_diterima = $disposisi->tanggal_diterima,
+            "bidangs_id" => $this->bidangs_id = $disposisi->bidangs_id,
+            "status_id" => $this->status_id = $disposisi->status_id,
+            "users_id" => $this->users_id = $disposisi->users_id,
+            "disposisi_kepala" => $this->disposisi_kepala = $disposisi->disposisi_kepala,
+            "disposisi_sekretaris" => $this->disposisi_sekretaris = $disposisi->disposisi_sekretaris,
 
-            ];
-        }
-        else {
-            $data = [
-                $disposisi = Disposisi::findOrFail($id),
-                "id" => $this->id=$disposisi->id,
-                "dari" => $this->dari = $disposisi->dari,
-                "tanggal_dibuat" => $this->tanggal_dibuat = $disposisi->tanggal_dibuat,
-                "no_surat" => $this->no_surat = $disposisi->no_surat,
-                "isi_surat" => $this->isi_surat = $disposisi->isi_surat,
-                "tanggal_diterima" => $this->tanggal_diterima = $disposisi->tanggal_diterima,
-                "bidangs_id" => $this->bidangs_id = $disposisi->bidangs_id,
-                "status_id" => $this->status_id = $disposisi->status_id,
-                "users_id" => $this->users_id = $disposisi->users_id,
-                "no_agenda" => "",
 
-            ];
-        }
+        ];
 
 
             // $disposisis_id=$id;

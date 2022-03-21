@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disposisi;
+use App\Models\Surat;
 use Illuminate\Http\Request;
 use Livewire\WithFileUploads;
 
 class DisposisiController extends Controller
 {
     use WithFileUploads;
-    public $disposisi_edit_id, $dari, $tanggal_dibuat, $no_surat, $isi_surat, $tanggal_diterima, $bidangs_id, $status_id, $status_disposisi, $filename;
+    public $disposisi_edit_id, $dari, $tanggal_dibuat, $no_agenda, $isi_surat, $tanggal_diterima, $bidangs_id, $status_id, $status_disposisi, $filename;
     public function index(){
-        return view('disposisi-form-user');
+        $jenis_surats = Surat::all();
+        return view('disposisi-form-user', compact('jenis_surats'));
     }
 
     public function index2(){
@@ -45,11 +47,13 @@ class DisposisiController extends Controller
           $emp = new Disposisi;
           $today = date('Y-m-d');
           $emp->dari = $request->dari;
-          $emp->tanggal_dibuat = $today;
-          $emp->no_surat = 0;
+          $emp->tanggal_dibuat = $request->tanggal_dibuat;
+          $emp->sifat = $request->sifat;
+          $emp->no_surat = $request->no_surat;
+          $emp->no_agenda = 0;
           $emp->surats_id = $request->surats_id;
           $emp->isi_surat = $request->isi_surat;
-        //   $emp->tanggal_diterima = $request->tanggal_diterima;
+          $emp->tanggal_diterima = $request->tanggal_diterima;
           $emp->bidangs_id = $request->bidangs_id;
           $emp->status_id = $status_id;
           $emp->users_id = auth()->id();
@@ -63,13 +67,13 @@ class DisposisiController extends Controller
 
           $disposisi = Disposisi::where('id', $getID)->first();
 
-          $disposisi->no_surat = $getNoSurat;
+          $disposisi->no_agenda = $getNoSurat;
 
 
           $disposisi->save();
 
         session()->flash('message', $request->id ? 'Data updated successfully.' : 'Data added successfully.');
-        return redirect('form-disposisi-masuk')->with('status', 'Form Data Has Been validated and insert');
+        return redirect('form-disposisi-masuk')->with('status', 'Form Berhasil Disimpan');
 
     }
 
@@ -96,10 +100,12 @@ class DisposisiController extends Controller
           $emp = new Disposisi;
           $today = date('Y-m-d');
           $emp->dari = $request->dari;
-          $emp->tanggal_dibuat = $today;
-          $emp->no_surat = 0;
+          $emp->tanggal_dibuat = $request->tanggal_dibuat;
+          $emp->no_surat = $request->no_surat;
+          $emp->sifat = $request->sifat;
+          $emp->no_agenda = 0;
           $emp->isi_surat = $request->isi_surat;
-        //   $emp->tanggal_diterima = $request->tanggal_diterima;
+          $emp->tanggal_diterima = $request->tanggal_diterima;
           $emp->bidangs_id = $request->bidangs_id;
           $emp->status_id = $status_id;
           $emp->users_id = auth()->id();
@@ -113,7 +119,7 @@ class DisposisiController extends Controller
 
           $disposisi = Disposisi::where('id', $getID)->first();
 
-          $disposisi->no_surat = $getNoSurat;
+          $disposisi->no_agenda = $getNoSurat;
 
 
           $disposisi->save();

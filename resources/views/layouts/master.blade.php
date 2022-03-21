@@ -130,7 +130,15 @@ letter-spacing: 1px;
                                     <x-jet-nav-link href="{{ route('disposisi-dashboard') }}" :active="request()->routeIs('disposisi-dashboard')">
                                         <i class="nav-icon fa fa-file-text"></i>
                                         <p>
-                                            {{ 'DISPOSISI' }}
+                                            {{ 'SURAT MASUK' }}
+                                        </p>
+                                    </x-jet-nav-link>
+                                </li>
+                                <li class="nav-item">
+                                    <x-jet-nav-link href="{{ url('keluar-dashboard') }}" :active="request()->Is('keluar-dashboard')">
+                                        <i class="nav-icon fa fa-file-text"></i>
+                                        <p>
+                                            {{ 'SURAT KELUAR' }}
                                         </p>
                                     </x-jet-nav-link>
                                 </li>

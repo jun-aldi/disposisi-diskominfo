@@ -72,12 +72,12 @@
                                                 <div class="row row-cols-auto">
                                                     <div class="col-xl-1 my-2">
                                                         <form method="get">
-                                                            <button class="btn btn-mulai" name="date_now_filter" id="date_now_filter" type="submit" value="{{$date_now_filter}}">Hari ini</button>
+                                                            <button class="btn btn-primary" name="date_now_filter" id="date_now_filter" type="submit" value="{{$date_now_filter}}">Hari ini</button>
                                                         </form>
                                                     </div>
                                                     <div class="col-xl-2 my-2">
                                                         @if(Auth::check() && Auth::user()->roles == "ADMIN")
-                                                        <a class="btn btn-primary" href="javascript:void(0)" id="createNewAgenda">Buat Baru</a>
+                                                        <a class="btn btn-danger" href="javascript:void(0)" id="createNewAgenda">Buat Baru</a>
                                                         @endif
                                                     </div>
                                                   </div>
@@ -88,15 +88,15 @@
                                             <table class="table table-bordered" >
                                                 <thead class="thead">
                                                     <tr class="bg-gray-100">
-                                                        <th class="px-4 py-2">Hari / Tanggal</th>
-                                                        <th class="px-4 py-2">No Agenda</th>
-                                                        <th class="px-4 py-2">Jam Agenda</th>
-                                                        <th class="px-4 py-2">Isi</th>
-                                                        <th class="px-4 py-2">Tempat</th>
-                                                        <th class="px-4 py-2">Keterangan</th>
-                                                        @if (Auth::check())
-                                                        <th class="px-4 py-2">Disposisi</th>
-                                                        @endif
+                                                        <th class="px-4 py-2 fw-bold"><h5 class="fw-bold">Hari / Tanggal</h5></th>
+
+                                                        <th class="px-4 py-2"><h5 class="fw-bold">Jam Agenda</h5> </th>
+                                                        <th class="px-4 py-2"><h5 class="fw-bold">Isi</h5> </th>
+                                                        <th class="px-4 py-2"><h5 class="fw-bold">Tempat</h5> </th>
+                                                        <th class="px-4 py-2"><h5 class="fw-bold">Keterangan</h5> </th>
+
+                                                        <th class="px-4 py-2"><h5 class="fw-bold">Disposisi</h5> </th>
+
 
                                                     </tr>
                                                 </thead>
@@ -119,26 +119,16 @@
                                                                 $hari = $dayList[$day];
 
                                                         @endphp
-                                                        <td class="border px-4 py-2">{{$hari}} / {{$agenda->tanggal_agenda}}</td>
+                                                        <td class="border py-2" width="200">{{$hari}} / {{$agenda->tanggal_agenda}}</td>
                                                         {{-- <td class="border px-4 py-2">{{ $agenda->id }}</td> --}}
                                                         {{-- <td class="border px-4 py-2">{{ $agenda->disposisi_id }}</td> --}}
-                                                        <td class="border px-4 py-2">{{ $agenda->id }}</td>
-                                                        <td class="border px-4 py-2">{{ $agenda->jam_agenda }}</td>
-                                                        <td class="border px-4 py-2">{{ $agenda->isi }}</td>
-                                                        <td class="border px-4 py-2">{{ $agenda->tempat }}</td>
-                                                        <td class="border px-4 py-2">{{ $agenda->keterangan }}</td>
-                                                        <td class="border px-4 py-2">
-                                                            @if (Auth::check() && !empty($agenda->disposisis_id     ))
-                                                            <form method="post" action="{{route('lihatpdf', $agenda->disposisis_id)}}">
-                                                            @csrf
-                                                            <button class="btn btn-dark mx-2">Lihat Disposisi</button>
-                                                            </form>
-                                                            <form class="my-1 mx-1" method="post" action="{{route('downloadfile', $agenda->disposisis_id)}}">
-                                                                @csrf
-                                                                <button class="btn btn-info mx-2">Lihat Surat</button>
-                                                            </form>
-                                                        </td>
-                                                        @endif
+                                                        {{-- <td class="border px-4 py-2">{{ $agenda->id }}</td> --}}
+                                                        <td class="border px-4 py-2" width="200">{{ date("H:i", strtotime($agenda->jam_agenda))  }}</td>
+                                                        <td class="border px-4 py-2" width="700">{{ $agenda->isi }}</td>
+                                                        <td class="border px-4 py-2" width="300">{{ $agenda->tempat }}</td>
+                                                        <td class="border px-4 py-2" width="400">{{ $agenda->keterangan }}</td>
+                                                        <td class="border px-4 py-2">{{ $agenda->disposisi }}</td>
+
                                                     </tr>
                                                     @endforeach
                                                     @endif
@@ -165,21 +155,17 @@
                     <div class="modal fade" id="ajaxCreateNewAgenda" aria-hidden="true" >
                         <div class="modal-dialog modal-xl">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="modelHeading"></h4>
+                                <div class="modal-header text-center">
+
+                                     <h1 class="modal-title fw-bold text-center" style="text-align: center" id="modelHeading"></h1>
                                 </div>
                                 <div class="modal-body">
                                     <form id="agendaCreateForm" name="agendaCreateForm" class="form-horizontal" method="post" >
                                         @csrf
+                                        <input type="hidden" name="disposisis_id" id="disposisis_id">
                                         <div class="form-group">
-                                            <label for="name" class="col-sm-2 control-label">Disposisi id</label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control" id="disposisis_id" name="disposisis_id" placeholder="Tempat Agenda" value="" maxlength="50" required="" readonly>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="bidangs_id" class="col-sm-2 control-label">Kepada</label>
-                                            <div class="col-sm-12">
+                                            <label for="bidangs_id" class="col-sm-2 control-label"><h6 class="fw-bold">Untuk</h6> </label>
+                                            <div class="col-sm-4">
                                                 <select  name="bidangs_id" id="bidangs_id" class="form-select" aria-label="Default select example">
                                                     <option value="1">Kepala Diskominfo</option>
                                                     <option value="2">Sekretariat Diskominfo</option>
@@ -189,33 +175,39 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="jam_agenda" class="col-sm-2 control-label">Jam Agenda</label>
+                                            <label for="jam_agenda" class="col-sm-2 control-label"><h6 class="fw-bold"> Jam Agenda</h6></label>
                                             <div class="col-sm-4">
                                                 <input type="time" class="form-control" id="jam_agenda" name="jam_agenda" placeholder="Jam Agenda" value="" maxlength="50" required="">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="tanggal_agenda" class="col-sm-2 control-label">Tanggal Agenda</label>
+                                            <label for="tanggal_agenda" class="col-sm-2 control-label"><h6 class="fw-bold">Tanggal Agenda</h6> </label>
                                             <div class="col-sm-4">
                                                 <input type="date" class="form-control" id="tanggal_agenda" name="tanggal_agenda" placeholder="Tanggal Agenda" value="" maxlength="50" required="">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="isi" class="col-sm-2 control-label">Isi</label>
+                                            <label for="isi" class="col-sm-2 control-label"><h6 class="fw-bold">Isi</h6> </label>
                                             <div class="col-sm-12">
                                                 <textarea name="isi" id="isi" placeholder="Isi Agenda" class="col-sm-12"></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">Tempat</label>
+                                            <label class="col-sm-2 control-label"><h6 class="fw-bold">Tempat</h6> </label>
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="tempat" name="tempat" placeholder="Tempat Agenda" value="" maxlength="50" required="">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
+                                            <label for="keterangan" class="col-sm-2 control-label" ><h6 class="fw-bold">Keterangan</h6> </label>
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan Agenda" value="" maxlength="50" required="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="disposisi" class="col-sm-2 control-label"><h6 class="fw-bold">Disposisi</h6> </label>
+                                            <div class="col-sm-12">
+                                                <textarea name="disposisi" id="disposisi" placeholder="Isi Disposisi" class="col-sm-12" maxlength="200"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-sm-10"  style="color: red"><p id="saveError"></p></div>
@@ -246,7 +238,7 @@
             $('#saveBtnCreate').val("create-agenda");
             $('#id').val('');
             $('#agendaCreateForm').trigger("reset");
-            $('#modelHeading').html("Buat Disposisi");
+            $('#modelHeading').html("Buat Agenda");
             $('#ajaxCreateNewAgenda').modal('show');
         });
 

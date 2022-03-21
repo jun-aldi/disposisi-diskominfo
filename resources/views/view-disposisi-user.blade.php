@@ -53,7 +53,7 @@
                                                     </div>
                                                     <div class="col-xl-12"><br></div>
                                                     <div class="d-flex justify-content-between">
-                                                        <div class="p-2 fw-medium">No Surat : {{$disposisi->no_surat}}</div>
+                                                        <div class="p-2 fw-medium">No Agenda : {{$disposisi->no_surat}}</div>
                                                     </div>
                                                 </div>
                                             </div>

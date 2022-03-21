@@ -18,7 +18,7 @@ class DisposisiDashboardController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Disposisi::select(['id','dari','surats_id', 'tanggal_dibuat','no_surat','isi_surat','tanggal_diterima','bidangs_id','status_id','users_id'])
+            $data = Disposisi::select(['id','dari','surats_id', 'tanggal_dibuat', 'disposisi_kepala', 'disposisi_sekretaris','sifat','no_agenda','no_surat','isi_surat','tanggal_diterima','bidangs_id','status_id','users_id'])
             ->with(['users'])->with(['bidang'])->with(['surat']);
 
             // if(!empty($request->from_date))
@@ -104,12 +104,16 @@ class DisposisiDashboardController extends Controller
                 $disposisi = Disposisi::where('id', $request->id)->first();
                 $disposisi->dari = $request->dari;
                 $disposisi->tanggal_dibuat = $request->tanggal_dibuat;
+                $disposisi->no_agenda = $request->no_agenda;
+                $disposisi->sifat = $request->sifat;
                 $disposisi->no_surat = $request->no_surat;
                 $disposisi->isi_surat = $request->isi_surat;
                 $disposisi->tanggal_diterima = $request->tanggal_diterima;
                 $disposisi->surats_id = $request->surats_id;
                 $disposisi->bidangs_id = $request->bidangs_id;
                 $disposisi->status_id = $request->status_id;
+                $disposisi->disposisi_kepala = $request->disposisi_kepala;
+                $disposisi->disposisi_sekretaris = $request->disposisi_sekretaris;
 
                 $getSurat = $request->surats_id;
 
@@ -122,7 +126,7 @@ class DisposisiDashboardController extends Controller
 
                 $disposisi = Disposisi::where('id', $getID)->first();
 
-                $disposisi->no_surat = $getNoSurat;
+                $disposisi->no_agenda = $getNoSurat;
 
 
                 $disposisi->save();

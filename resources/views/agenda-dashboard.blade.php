@@ -9,12 +9,24 @@
         @endif
         <div class="row">
             <div class="col-xl-12 p-0">
-                <div class="jumbotron min-vh-100 m-0 d-flex flex-column justify-content-center">
-                    <div class="row d-flex justify-content-center my-auto" >
+                <div class="jumbotron min-vh-100 m-0 d-flex flex-column">
+                    <div class="row d-flex  my-auto" >
                         <div class="container my-4">
                             <h1 class="text-center fw-bold">AGENDA LIST DISKOMINFO KARANGANYAR</h1>
                         </div>
 
+                        <div class="col-4 border my-2 mx-2 py-2 py-3" style="text-align: left">
+                            <div class="form-group">
+                                <label for="bidang_filter" class="control-label fw bolder">Agenda</label>
+                                <select  name="bidang_filter" id="bidang_filter" class="form-select" aria-label="Default select example">
+                                    <option value="">Semua</option>
+                                    <option value="1">Kepala Diskominfo</option>
+                                    <option value="2">Sekretariat Diskominfo</option>
+                                    <option value="3">Bidang Tata Kelola Informatika</option>
+                                    <option value="4">Bidang Informasi dan Komunikasi Publik</option>
+                                  </select>
+                            </div>
+                        </div>
 
                         @if(session('status'))
                         <div class="alert alert-success">
@@ -22,6 +34,7 @@
                         </div>
                         @endif
                         {{-- <div class="col-12"> --}}
+
 
 
                             {{-- <div class="row justify-content-center"> --}}
@@ -35,13 +48,14 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>No Disposisi</th>
+                                                    {{-- <th>No Disposisi</th> --}}
                                                     <th>Bidang</th>
                                                     <th>Jam Agenda</th>
                                                     <th>Tanggal Agenda</th>
                                                     <th>Isi</th>
                                                     <th>Tempat</th>
                                                     <th>Keterangan</th>
+                                                    <th>Disposisi</th>
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -119,6 +133,12 @@
                                                     <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan Agenda" value="" maxlength="50" required="">
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="disposisi" class="col-sm-2 control-label">Disposisi</label>
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control" id="disposisi" name="disposisi" placeholder="Disposisi" value="" maxlength="50" required="">
+                                                </div>
+                                            </div>
                                             <div class="col-sm-10"><p id="saveError"></p></div>
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="submit" class="btn btn-primary" id="saveBtnEdit" value="create">Simpan Perubahan</button>
@@ -184,6 +204,12 @@
                                                         <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan Agenda" value="" maxlength="50" required="">
                                                     </div>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="disposisi" class="col-sm-2 control-label">Disposisi</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" id="disposisi" name="disposisi" placeholder="Disposisi" value="" maxlength="50" required="">
+                                                    </div>
+                                                </div>
                                                 <div class="col-sm-10"><p id="saveError"></p></div>
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button type="submit" class="btn btn-primary" id="saveBtnCreate" value="create">Simpan</button>
@@ -214,27 +240,35 @@
             }
         });
         var table = $('#table-agenda').DataTable({
+            lengthMenu: [[5,10, 25, 50, 100, -1], [5,10, 25, 50, 100, "Semua"]],
             dom: 'lBfrtip',
                 buttons: [
                     'copy', 'excel', 'pdf', 'csv', 'print'
                 ],
             processing: true,
             serverSide: true,
-            ajax: "{{ route('agenda-dashboard.index') }}",
+            ajax: {
+            url: "{{ route('agenda-dashboard.index') }}",
+            data: function (d) {
+                    d.bidang_filter = $('#bidang_filter').val(),
+                    d.search = $('input[type="search"]').val()
+                }
+            },
             order: [ [0, 'desc'] ],
             columns : [
                 {data: 'id', name: 'id'},
-                {data: 'disposisi.no_surat', name: 'disposisi_surat'},
+                // {data: 'disposisis.no_agenda', name: 'disposisis.no_agenda'},
                 {data: 'bidang.name', name: 'bidang.name'},
                 {data: 'jam_agenda', name: 'jam_agenda'},
                 {data: 'tanggal_agenda', name: 'tanggal_agenda'},
                 {data: 'isi', name: 'isi'},
                 {data: 'tempat', name: 'tempat'},
                 {data: 'keterangan', name: 'keterangan'},
+                {data: 'disposisi', name: 'disposisi'},
                 {data: 'action', name: 'action'},
             ],
             'columnDefs': [ {
-            'targets': [2,4,7], /* column index */
+            'targets': [2,4,8], /* column index */
             'orderable': false, /* true or false */
              }],
             initComplete: function () {
@@ -248,6 +282,11 @@
             });
         }
         });
+
+        $('#bidang_filter').change(function(){
+        table.draw();
+    });
+
 
 
         $('#createNewAgenda').click(function () {
@@ -298,6 +337,7 @@
             $('#isi').val(data.isi);
             $('#tempat').val(data.tempat);
             $('#keterangan').val(data.keterangan);
+            $('#disposisi').val(data.disposisi);
             })
         });
         $('#saveBtnEdit').click(function (e) {
